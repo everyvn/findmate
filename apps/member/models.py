@@ -7,6 +7,8 @@ from imagekit.processors import ResizeToFit
 from django.db.models import Count
 from django.conf import settings
 from apps.core.models import BaseModel
+from ckeditor_uploader.fields import RichTextUploadingField
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -30,6 +32,8 @@ class Profile(BaseModel):
                                 blank=True,
                                 null=True,
                                 )
+    detail = RichTextUploadingField(config_name='default', blank=True, null=True)
+    skills = TaggableManager(blank=True)
 
     def __str__(self):
         return self.name
@@ -41,7 +45,14 @@ class Profile(BaseModel):
         except:
             url = ''
         return url
+    
+    @property
+    def longitude(self):
+        return self.point[0]
 
+    @property
+    def latitude(self):
+        return self.point[1]
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

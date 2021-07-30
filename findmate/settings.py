@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'ckeditor',
     'ckeditor_uploader',
+    'django_seed',
     # Custom apps
     'apps.core',
     'apps.banner',
