@@ -4,9 +4,62 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Find Mate - {% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        ul {
+            list-style: none;
+        }
+        .gnb {
+            display: flex;
+            border-bottom: 1px solid #efefef;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+        }
+        .main_nav_ul {
+            display: flex;
+        }
+        .main_nav_ul li {
+            margin-left: 2rem;
+        }
+        .main_contents {
+            background-color: #fafafa;
+        }
+    </style>
+    {% block style %}
+    {% endblock %}
 </head>
 <body>
+    <header>
+        <nav class="gnb">
+            <a class="main_logo">LOGO</a>
+            <div class="main_nav">
+                <ul class="main_nav_ul">
+                    <li><a>메이트 찾기</a></li>
+                    <li><a>팀 찾기</a></li>
+                    <li><a>공지사항</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a>회원메뉴</a></li>
+                    {% else %}
+                    <li><a>로그인</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="main_contents">
+        {% block content %}
+        {% endblock %}
+    </div>
     
 </body>
 </html>

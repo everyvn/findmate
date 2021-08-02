@@ -65,3 +65,56 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+class CVCategory(BaseModel):
+    title = models.CharField(max_length=20)
+    slug = models.SlugField(max_length=200, db_index=True, unique=True, allow_unicode=True)
+
+    def __str__(self):
+        return f"{self.title}"
+
+
+POSITION = [
+    ('1', '사원'),
+    ('2', '주임'),
+    ('3', '대리'),
+    ('4', '과장'),
+    ('5', '차장'),
+    ('6', '부장'),
+    ('7', '임원 이상'),
+    ('8', '기타'),
+]
+
+EDU_SELECT = [
+    ('1', '졸업'),
+    ('2', '졸업예정'),
+    ('3', '중퇴'),
+    ('4', '휴학'),
+    ('5', '재학'),
+]
+
+class CVItem(BaseModel):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    category = models.ForeignKey(CVCategory, on_delete=models.CASCADE, default=None)
+    # Company
+    company = models.CharField(max_length=100, blank=True, null=True)
+    company_start_date = models.DateField(blank=True, null=True)
+    company_end_date = models.DateField(blank=True, null=True)
+    company_career = models.CharField(max_length=100, choices=POSITION, blank=True, null=True)
+    # Education
+    education = models.CharField(max_length=100, blank=True, null=True)
+    education_status = models.CharField(max_length=100, choices=EDU_SELECT, blank=True, null=True)
+    education_major = models.CharField(max_length=100, blank=True, null=True)
+    # Projects
+    projects = models.CharField(max_length=100, blank=True, null=True)
+    projects_date = models.DateField(blank=True, null=True)
+    projects_desc = models.TextField(blank=True, null=True)
+    # Self intro
+    intro = models.TextField(blank=True, null=True)
+    # license
+    license_list = models.CharField(max_length=100, blank=True, null=True)
+    license_list_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.category} of {self.profile.name}"
