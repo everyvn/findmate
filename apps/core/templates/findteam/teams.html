@@ -30,6 +30,12 @@
     .team_info h4 {
         font-size: 1.2em;
         font-weight: 400;
+        max-width:280px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; 
+        -webkit-box-orient: vertical;
     }
     .team_info span {
         font-size: .9rem;
@@ -51,6 +57,7 @@
     .team_name {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
     .team_desc {
         overflow: hidden;
@@ -58,6 +65,10 @@
         display: -webkit-box;
         -webkit-line-clamp: 2; 
         -webkit-box-orient: vertical;
+    }
+    span.team_category {
+        font-size: .8rem;
+        color: gray;
     }
 </style>
 {% endblock %}
@@ -79,7 +90,7 @@
             <div>
                 <div class="team_name">
                     <h4>{{team.name}}</h4>
-                    <span>{{team.get_purpose_display}}</span>
+                    <span class="team_category">{{team.get_purpose_display}}</span>
                 </div>
                 <span class='team_desc'>{{team.short_description}}</span>
             </div>
