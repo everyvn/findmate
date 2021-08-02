@@ -1,0 +1,133 @@
+{% extends 'index.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block style %}
+<style>
+    .profile_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 800px;
+        margin: auto;
+        padding: 1rem 0;
+    }
+    .member_name {
+        font-size: 2rem;
+    }
+    .member_info span {
+        font-size: .7rem;
+        background-color: gray;
+        color: white;
+        border-radius: 4px;
+        padding: .2rem .8rem;
+    }
+    .profile_contact {
+        margin-top: 1rem;
+    }
+    .profile_contact > a {
+        display: block;
+        font-weight: 300;
+        font-size: 1.2rem;
+    }
+    .profile_img {
+        border-radius: 50%;
+        border: 7px solid #efefef;
+    }
+    .profile_btns {
+        margin-top: 1rem;
+    }
+    .profile_btns > a {    
+        font-size: 1rem;
+        font-weight: 300;
+        padding: .4rem .9rem;
+        border-radius: 4px;
+        color: white;
+    }
+    .profile_btns .profile_modify {
+        background-color: green;
+    }
+    .profile_btns .profile_resign {
+        background-color: #2b2b2b;
+    }
+    .cv_wrapper {
+        width: 800px;
+        margin: auto;
+        min-height: 100vh;
+    }
+    .item_category {
+        padding-top: 1rem;
+        font-weight: 500;
+        font-size: 1.5rem;
+    }
+    .item_box {
+        margin-top: 1rem;
+        background-color: white;
+        border: 1px solid #efefef;
+        padding: 1rem;
+        font-weight: 300;
+        display:flex;
+        justify-content: space-between;
+    }
+</style>
+{% endblock %}
+
+{% block header_content %}
+<div class="profile_header">
+    <div class="member_info">
+        <h2 class="member_name">{{profile.name}}</h2>
+        {% for skill in profile.skills.all %}
+        <span>#{{skill}}</span>
+        {% endfor %}
+        <div class="profile_contact">
+            <a class="email">{{request.user.email}}</a>
+            <a class="phone">079-506-3972</a>
+        </div>
+        <div class="profile_btns">
+            <a class="profile_modify">프로필 수정</a>
+            <a class="profile_resign">회원 탈퇴</a>
+        </div>
+    </div>
+    <img class="profile_img" src="https://picsum.photos/200/200">
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="cv_wrapper">
+    <h4 class="item_category">Company</h4>
+    {% for item in profile.cvitem_set.all %}
+        {% if item.category.id == 1 %}
+        <div class="item_box {{item.category.slug}}" data-category={{item.category}}>
+            <span>{{item.company}}</span>
+            <span>{{item.get_company_career_display}}</span>
+            <span>{{item.company_start_date}} ~ {{item.company_end_date}}</span>
+        </div>
+        {% elif item.category.id == 2 %}
+        <div class="item_box {{item.category.slug}}" data-category={{item.category}}>
+            <span>{{item.education}}</span>
+            <span>{{item.get_education_status_display}}</span>
+            <span>{{item.education_major}}</span>
+        </div>
+        
+        {% endif %}
+    {% endfor %}
+
+<script>
+    var title = document.createElement('h4');
+    title.setAttribute('class', 'item_category')
+    let cv_list = document.querySelector('.cv_wrapper');
+    let item_box = document.querySelectorAll('.item_box');
+    for(i=0;i<item_box.length;i++){
+        console.log(item_box[i])
+        if(item_box[i].dataset.category != item_box[i+1].dataset.category){
+            title.innerHTML=`${item_box[i+1].dataset.category}`;
+            cv_list.insertBefore(title, item_box[i+1]);
+        }
+    }
+</script>
+
+
+{% endblock %}
