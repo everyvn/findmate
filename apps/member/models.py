@@ -24,7 +24,9 @@ def mem_img_path(instance, filename):
 
 class Profile(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    name = models.CharField(max_length=500, blank=True)
+    name = models.CharField(max_length=45, blank=True)
+    short_desc = models.CharField(max_length=200, blank=True, null=True)
+    options = models.CharField(max_length=200, blank=True, null=True)
     picture = ProcessedImageField(upload_to = mem_img_path,
                                 processors=[ResizeToFit(width=150, upscale=False)],
                                 format='JPEG',
