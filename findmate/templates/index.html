@@ -14,6 +14,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            text-decoration: none;
+            color: black;
         }
         ul {
             list-style: none;
@@ -34,6 +36,34 @@
         .main_contents {
             background-color: #fafafa;
         }
+        /* 헤더 컨텐츠(필터) 시작 */
+        .filter{
+            height: 60px;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            font-weight: 300;
+        }
+        .filter_item_list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .filter_item_list > span {
+            height: 60px;
+            width: 120px;
+            display: flex;
+            border-right: 1px solid #eee;
+            justify-content: center;
+            align-items: center;
+        }
+        .filter span:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        /* 헤더 컨텐츠(필터) 끝 */
     </style>
     {% block style %}
     {% endblock %}
@@ -41,11 +71,11 @@
 <body>
     <header>
         <nav class="gnb">
-            <a class="main_logo">LOGO</a>
+            <a class="main_logo" href="/">LOGO</a>
             <div class="main_nav">
                 <ul class="main_nav_ul">
-                    <li><a>메이트 찾기</a></li>
-                    <li><a>팀 찾기</a></li>
+                    <li><a href="/members">메이트 찾기</a></li>
+                    <li><a href="/">팀 찾기</a></li>
                     <li><a>공지사항</a></li>
                     {% if user.is_authenticated %}
                     <li><a>회원메뉴</a></li>

@@ -17,6 +17,7 @@
         border: 1px solid #efefef;
         max-width: 400px;
         background-color: white;
+        box-shadow: 0px 0px 30px #eee;
     }
     .team_img{
         margin: auto;
@@ -73,6 +74,22 @@
 </style>
 {% endblock %}
 
+{% block header_content %}
+
+<div class="filter">
+    <div class="filter_item_list">
+        <span>지역</span>
+        <span>직무</span>
+        <span>경력</span>
+        <span>목적</span>
+    </div>
+    <div class="create_post">
+        <span>모집공고 만들기</span>
+    </div>
+    
+</div>
+
+{% endblock %}
 
 {% block content %}
 

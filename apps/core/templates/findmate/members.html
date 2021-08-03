@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block title %}
-팀 찾기
+메이트 찾기
 {% endblock %}
 
 {% block style %}
@@ -17,6 +17,8 @@
         border: 1px solid #efefef;
         max-width: 400px;
         background-color: white;
+        min-height: 248px;
+        box-shadow: 0px 0px 30px #eee;
     }
     .member_info {
         padding: 1rem;
@@ -26,12 +28,13 @@
     .member_info h4 {
         font-size: 1rem;
         font-weight: 400;
-        max-width:280px;
+        max-width: 280px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 1; 
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        min-width: 234px;
     }
     .member_info span {
         font-size: .8rem;
@@ -58,6 +61,8 @@
     }
     .spec_info {
         padding: 2rem 1rem;
+        min-width: 398px;
+        min-height: 112px;
     }
     .spec_info span {
         font-weight: 300;
@@ -73,44 +78,61 @@
         font-size: .8rem;
         color: gray;
     }
+
 </style>
 {% endblock %}
 
+{% block header_content %}
+
+<div class="filter">
+    <div class="filter_item_list">
+        <span>지역</span>
+        <span>직무</span>
+        <span>경력</span>
+        <span>목적</span>
+    </div>
+    <div class="create_post">
+        <span>모집공고 만들기</span>
+    </div>
+    
+</div>
+
+{% endblock %}
 
 {% block content %}
 
 <div class="member_box_wrapper">
-
     {% for member in members %}
-    <div class="member_box">
-        <div class="member_info">
-            {% if member.logo %}
-            <img class="member_img" src="{{user.picture.url}}">
-            {% else %}
-            <img class="member_img" src="https://picsum.photos/200/200">
-            {% endif %}
-            <div>
-                <div class="member_title">
-                    <h4>{{member.short_desc}}</h4>
-                    <span class="member_name">by {{member.name}}</span>
+    <a href="https://naver.com" class="member_box">
+            <div class="member_info">
+                {% if member.logo %}
+                <img class="member_img" src="{{user.picture.url}}">
+                {% else %}
+                <img class="member_img" src="https://picsum.photos/200/200">
+                {% endif %}
+                <div>
+                    <div class="member_title">
+                        <h4>{{member.short_desc}}</h4>
+                        <span class="member_name">by {{member.name}}</span>
+                    </div>
+                    <!-- <span class='member_desc'>{{member.short_description}}</span> -->
                 </div>
-                <!-- <span class='member_desc'>{{member.short_description}}</span> -->
+                
             </div>
+                
+            <div class="spec_info">
+                <span>
+                    {{member.options}}
+                </span>
+            </div>
+            {% if member.team_set.all %}
+            <div class="current_team">
+                <span>현재 {{member.team_set.all|length}}개 팀에서 활약중입니다.</span>
+            </div>
+            {% endif %}
             
-        </div>
-            
-        <div class="spec_info">
-            <span>
-                {{member.options}}
-            </span>
-        </div>
-        {% if member.team_set.all %}
-        <div class="current_team">
-            <span>현재 {{member.team_set.all|length}}개 팀에서 활약중입니다.</span>
-        </div>
-        {% endif %}
-        
-    </div>
+    </a>
+
     {% endfor %}
 
 </div>
