@@ -6,29 +6,25 @@
 
 {% block style %}
 <style>
-    .team_box_wrapper {
+    .member_box_wrapper {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         width: 1280px;;
         margin: auto;
     }
-    .team_box {
+    .member_box {
         margin: 1rem auto;
         border: 1px solid #efefef;
         max-width: 400px;
         background-color: white;
     }
-    .team_img{
-        margin: auto;
-        display: block;
-    }
-    .team_info {
+    .member_info {
         padding: 1rem;
         display: flex;
         align-items: center;
     }
-    .team_info h4 {
-        font-size: 1.2em;
+    .member_info h4 {
+        font-size: 1rem;
         font-weight: 400;
         max-width:280px;
         overflow: hidden;
@@ -37,36 +33,43 @@
         -webkit-line-clamp: 1; 
         -webkit-box-orient: vertical;
     }
-    .team_info span {
-        font-size: .9rem;
+    .member_info span {
+        font-size: .8rem;
         font-weight: 300;
+        color: gray;
     }
-    .team_info .team_logo {
-        width: 80px;
-        height: 80px;
+    .member_info .member_img {
+        width: 48px;
+        height: 48px;
         border: 1px solid #efefef;
         border-radius: 50%;
         margin-right: 1rem;
     }
-    .career_info {
-        border-top: 1px solid #efefef;
-        padding: 1rem;
-        font-size: .9rem;
-        font-weight: 300;
-    }
-    .team_name {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .team_desc {
+    .member_desc {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2; 
         -webkit-box-orient: vertical;
     }
-    span.team_category {
+    span.member_category {
+        font-size: .8rem;
+        color: gray;
+    }
+    .spec_info {
+        padding: 2rem 1rem;
+    }
+    .spec_info span {
+        font-weight: 300;
+        font-size: .9rem;
+    }
+    .current_team {
+        border-top: 1px solid #efefef;
+        padding: 1rem;
+        font-size: .9rem;
+        font-weight: 300;
+    }
+    .current_team span {
         font-size: .8rem;
         color: gray;
     }
@@ -76,30 +79,37 @@
 
 {% block content %}
 
-<div class="team_box_wrapper">
+<div class="member_box_wrapper">
 
     {% for member in members %}
-    <div class="team_box">
-        <div class="team_info">
-            {% if team.logo %}
-            <img class="team_logo" src="{{user.picture.url}}">
+    <div class="member_box">
+        <div class="member_info">
+            {% if member.logo %}
+            <img class="member_img" src="{{user.picture.url}}">
             {% else %}
-            <img class="team_logo" src="https://picsum.photos/200/200">
+            <img class="member_img" src="https://picsum.photos/200/200">
             {% endif %}
             <div>
-                <div class="team_name">
-                    <h4>{{member.name}}</h4>
-                    <span class="team_category">{{team.get_purpose_display}}</span>
+                <div class="member_title">
+                    <h4>{{member.short_desc}}</h4>
+                    <span class="member_name">by {{member.name}}</span>
                 </div>
-                <!-- <span class='team_desc'>{{team.short_description}}</span> -->
+                <!-- <span class='member_desc'>{{member.short_description}}</span> -->
             </div>
             
         </div>
-        {% if team.findmember_set.all %}
-        <div class="career_info">
-            <span>함께할 {{team.findmember_set.all|length}}개의 포지션을 찾고있어요</span>
+            
+        <div class="spec_info">
+            <span>
+                {{member.options}}
+            </span>
+        </div>
+        {% if member.team_set.all %}
+        <div class="current_team">
+            <span>현재 {{member.team_set.all|length}}개 팀에서 활약중입니다.</span>
         </div>
         {% endif %}
+        
     </div>
     {% endfor %}
 
