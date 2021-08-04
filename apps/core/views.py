@@ -17,3 +17,10 @@ def member_list(request):
         'members':members,
     }
     return render(request, 'findmate/members.html', context)
+
+
+def make_team(request):
+    context ={
+        
+    }
+    return render(request, 'findteam/maketeam.html', context)

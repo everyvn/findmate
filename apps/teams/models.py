@@ -40,6 +40,7 @@ class Team(BaseModel):
                                    options={'quality':90},
                                    blank=True,
                                    null=True)
+    team_detail = RichTextUploadingField(config_name='default', blank=True, null=True)
 
     def __str__(self):
         return '%s' % self.name
