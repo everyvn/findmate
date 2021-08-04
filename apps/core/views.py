@@ -24,6 +24,7 @@ def make_team(request):
     posting_type = "create"
     if request.method == 'POST':
         form = TeamRegisterForm(request.POST, request.FILES)
+        print(form)
         if form.is_valid():
             newTeam = form.save(commit=False)
             newTeam.save()
@@ -62,3 +63,13 @@ def update_team(request, team_pk):
         'posting_type':posting_type,
     }
     return render(request, 'findteam/maketeam.html', context)
+
+
+def team_select(request):
+    print('접속함')
+    teams = get_object_or_404(Profile, user=request.user).teams.all()
+
+    context = {
+        'teams':teams,
+    }
+    return render(request, 'findmate/select_team.html', context)
