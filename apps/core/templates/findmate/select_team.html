@@ -78,6 +78,10 @@
     .create_team h3 {
         font-size: 2rem;
     }
+    .team_box:hover {
+        background-color: #efefef;
+        box-shadow: 0 0 15px 1px #efefef;
+    }
 </style>
 {% endblock %}
 
@@ -104,7 +108,7 @@
                         <span>{{team.get_purpose_display}}</span>
                     </div>
                 {% endfor %}
-                <a class="team_box">
+                <a class="team_box" href="/make_team">
                     <div class="create_team"><h3>+</h3></div>
                     <h4>새로운 팀 만들기</h4>
                     <span>새로운 팀을 구성합니다.</span>
@@ -114,7 +118,5 @@
 
 </div>
 
-<script>
-    let url = ""
-</script>
+
 {% endblock %}

@@ -65,6 +65,7 @@
     }
     .register_team {
         background-color: #0099cc;
+        border: none;
     }
     .form_control select {
         margin-left: 2rem;
@@ -106,8 +107,8 @@
         <form method="POST" action="{% if posting_type == 'create' %}{% url 'core:make_team' %}{% else  %}{% url 'core:update_team' team.pk %}{% endif %}" enctype="multipart/form-data">
             <div class="form_header">
                 <div class="header_text">
-                    <h3>새로운 팀 만들기</h3>
-                    <span>아래 정보를 기입하여 새로운 팀을 생성합니다.</span>
+                    <h3>모집공고 만들기</h3>
+                    <span>훌륭한 팀원을 찾기 위해 신중하게 작성해주세요.</span>
                 </div>
                 <div class="btn_list">
                     <a class="btn back_to_list">돌아가기</a>
@@ -117,35 +118,37 @@
             <div class="form_content">
                     {% csrf_token %}
                 <div class="form_control">
-                    <label class="form_label" for="team_name">팀 이름</label>
-                    <!-- <input class="team_input" id="team_name" type="text" placeholder="팀 이름을 입력해주세요. (최대 20자)"> -->
-                    {{form.name}}
+                    <label class="form_label" for="team_name">공고 제목</label>
+                    {{form.title}}
                 </div>
                 <div class="form_control">
-                    <label class="form_label" for="team_desc">팀 소개</label>
-                    <!-- <input class="team_input" id="team_desc" type="text" placeholder="짧은 소개문구를 입력해주세요. (최대 50자)"> -->
-                    {{form.short_description}}
+                    <label class="form_label" for="team_desc">지원 자격</label>
+                    {{form.essencial}}
                 </div>
                 <div class="form_control">
-                    <label class="form_label" for="id_purpose">팀 목표</label>
-                    <!-- <select class="team_input" id="team_purpose">
-                        <option value="" disabled selected>팀 목표를 선택해주세요</option>
-                        <option>창업</option>
-                        <option>사이드프로젝트</option>
-                        <option>취미</option>
-                        <option>기타</option>
-                    </select> -->
-                    {{form.purpose}}
+                    <label class="form_label" for="id_purpose">우대 사항</label>
+                    {{form.plus}}
                 </div>
                 <div class="form_control">
-                    <span class="form_label">팀 로고</span>
-                    <label class="upload_label" for="id_logo">업로드 (200x200)</label>
-                    {{form.logo}}
+                    <label class="form_label" for="id_purpose">모집 인원</label>
+                    {{form.manpower}}
                 </div>
                 <div class="form_control">
-                    <h4 class="form_label" class="form_label">팀 소개</h4>
+                    <label class="form_label" for="id_purpose">담당자명</label>
+                    {{form.contact_name}}
+                </div>
+                <div class="form_control">
+                    <label class="form_label" for="id_purpose">전화번호</label>
+                    {{form.contact_phone}}
+                </div>
+                <div class="form_control">
+                    <label class="form_label" for="id_purpose">메일주소</label>
+                    {{form.contact_email}}
+                </div>
+                <div class="form_control">
+                    <h4 class="form_label" class="form_label">모집공고 상세</h4>
                     {{form.media}}
-                    {{form.team_detail|safe}}
+                    {{form.msg|safe}}
                 </div>
                 
             </div>
