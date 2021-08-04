@@ -1,0 +1,131 @@
+{% extends "index.html" %}
+
+{% block title %}
+팀원 모집
+{% endblock %}
+
+{% block style %}
+<style>
+    .make_team_wrapper{
+        padding: 2rem 1rem;
+    }
+    .box {
+        border:1px solid #efefef;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 30px #eee;
+        width: 1280px;
+        margin: auto;
+    }
+    .form_header {
+        border-bottom: 1px solid #efefef;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .form_header h3 {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+    .form_header span {
+        font-size: .8rem;
+        color: gray;
+    }
+    .form_content {
+        padding: 0 2rem;
+    }
+    .form_control {
+        margin: 1rem 0;
+    }
+    .team_input {
+        margin-left: 2rem;
+        width: 480px;
+        height: 48px;
+        border: none;
+        border-bottom: 1px solid #efefef;
+        padding: .5rem;
+        font-size: 1rem;
+        font-weight: 300;
+        outline: none;
+    }
+    .form_label {
+        font-size: 1rem;
+        font-weight: 300;
+    }
+    .django-ckeditor-widget {
+        width: 100%;
+        margin-top: 1rem;
+    }
+    .btn {
+        padding: .5rem 2rem;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 300;
+        background-color: gray;
+    }
+    .register_team {
+        background-color: #0099cc;
+    }
+</style>
+{% endblock %}
+
+{% block header_content %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="make_team_wrapper">
+
+    <div class="form_wrapper box">
+        <div class="form_header">
+            <div class="header_text">
+                <h3>새로운 팀 만들기</h3>
+                <span>아래 정보를 기입하여 새로운 팀을 생성합니다.</span>
+            </div>
+            <div class="btn_list">
+                <a class="btn back_to_list">돌아가기</a>
+                <a class="btn register_team">등록하기</a>
+            </div>
+        </div>
+        <div class="form_content">
+            <form>
+                {% csrf_token %}
+            <div class="form_control">
+                <label class="form_label" for="team_name">팀 이름</label>
+                <input class="team_input" id="team_name" type="text" placeholder="팀 이름을 입력해주세요. (최대 20자)">
+            </div>
+            <div class="form_control">
+                <label class="form_label" for="team_desc">팀 소개</label>
+                <input class="team_input" id="team_desc" type="text" placeholder="짧은 소개문구를 입력해주세요. (최대 50자)">
+            </div>
+            <div class="form_control">
+                <label class="form_label" for="team_purpose">팀 목표</label>
+                <select class="team_input" id="team_purpose">
+                    <option value="" disabled selected>팀 목표를 선택해주세요</option>
+                    <option>창업</option>
+                    <option>사이드프로젝트</option>
+                    <option>취미</option>
+                    <option>기타</option>
+                </select>
+            </div>
+            <div class="form_control">
+                <label class="form_label" for="team_purpose">팀 로고</label>
+                <input class="team_input" type="file">
+            </div>
+            <div class="form_control">
+                <h4 class="form_label" class="form_label">팀 소개</h4>
+                {{form.media}}
+                {{form.team_detail|safe}}
+            </div>
+            </form>
+            
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let url = ""
+</script>
+{% endblock %}

@@ -66,6 +66,31 @@
     .register_team {
         background-color: #0099cc;
     }
+    .form_control select {
+        margin-left: 2rem;
+        width: 480px;
+        height: 48px;
+        border: none;
+        border-bottom: 1px solid #efefef;
+        padding: .5rem;
+        font-size: 1rem;
+        font-weight: 300;
+        outline: none;
+    }
+    .form_control input[type='file']{
+        display:none;
+    }
+    .upload_label {
+        background-color: #0099ee;
+        padding: .3rem 1.2rem;
+        font-size: .8rem;
+        border-radius: 4px;
+        color: white;
+        margin-left: 2rem;
+    }
+    .form_control #text {
+        display: none;
+    }
 </style>
 {% endblock %}
 
@@ -78,50 +103,58 @@
 <div class="make_team_wrapper">
 
     <div class="form_wrapper box">
-        <div class="form_header">
-            <div class="header_text">
-                <h3>새로운 팀 만들기</h3>
-                <span>아래 정보를 기입하여 새로운 팀을 생성합니다.</span>
+        <form method="POST" action="{% if posting_type == 'create' %}{% url 'core:make_team' %}{% else  %}{% url 'core:update_team' team.pk %}{% endif %}" enctype="multipart/form-data">
+            <div class="form_header">
+                <div class="header_text">
+                    <h3>새로운 팀 만들기</h3>
+                    <span>아래 정보를 기입하여 새로운 팀을 생성합니다.</span>
+                </div>
+                <div class="btn_list">
+                    <a class="btn back_to_list">돌아가기</a>
+                    <input type="submit" class="btn register_team" value="등록하기">
+                </div>
             </div>
-            <div class="btn_list">
-                <a class="btn back_to_list">돌아가기</a>
-                <a class="btn register_team">등록하기</a>
+            <div class="form_content">
+                    {% csrf_token %}
+                <div class="form_control">
+                    <label class="form_label" for="team_name">팀 이름</label>
+                    <!-- <input class="team_input" id="team_name" type="text" placeholder="팀 이름을 입력해주세요. (최대 20자)"> -->
+                    {{form.name}}
+                </div>
+                <div class="form_control">
+                    <label class="form_label" for="team_desc">팀 소개</label>
+                    <!-- <input class="team_input" id="team_desc" type="text" placeholder="짧은 소개문구를 입력해주세요. (최대 50자)"> -->
+                    {{form.short_description}}
+                </div>
+                <div class="form_control">
+                    <label class="form_label" for="team_purpose">팀 목표</label>
+                    <!-- <select class="team_input" id="team_purpose">
+                        <option value="" disabled selected>팀 목표를 선택해주세요</option>
+                        <option>창업</option>
+                        <option>사이드프로젝트</option>
+                        <option>취미</option>
+                        <option>기타</option>
+                    </select> -->
+                    {{form.purpose}}
+                </div>
+                <div class="form_control">
+                    <span class="form_label">팀 로고</span>
+                    <label class="upload_label" for="id_logo">업로드 (200x200)</label>
+                    {{form.logo}}
+                </div>
+                <div class="form_control">
+                    <h4 class="form_label" class="form_label">팀 소개</h4>
+                    {{form.media}}
+                    {{form.team_detail|safe}}
+                </div>
+                
             </div>
-        </div>
-        <div class="form_content">
-            <form>
-                {% csrf_token %}
-            <div class="form_control">
-                <label class="form_label" for="team_name">팀 이름</label>
-                <input class="team_input" id="team_name" type="text" placeholder="팀 이름을 입력해주세요. (최대 20자)">
-            </div>
-            <div class="form_control">
-                <label class="form_label" for="team_desc">팀 소개</label>
-                <input class="team_input" id="team_desc" type="text" placeholder="짧은 소개문구를 입력해주세요. (최대 50자)">
-            </div>
-            <div class="form_control">
-                <label class="form_label" for="team_purpose">팀 목표</label>
-                <select class="team_input" id="team_purpose">
-                    <option value="" disabled selected>팀 목표를 선택해주세요</option>
-                    <option>창업</option>
-                    <option>사이드프로젝트</option>
-                    <option>취미</option>
-                    <option>기타</option>
-                </select>
-            </div>
-            <div class="form_control">
-                <label class="form_label" for="team_purpose">팀 로고</label>
-                <input class="team_input" type="file">
-            </div>
-            <div class="form_control">
-                <h4 class="form_label" class="form_label">팀 소개</h4>
-                {{form.media}}
-                {{form.team_detail|safe}}
-            </div>
-            </form>
-            
-        </div>
+        </form>
     </div>
 
 </div>
+
+<script>
+    let url = ""
+</script>
 {% endblock %}
