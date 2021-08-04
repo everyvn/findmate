@@ -20,6 +20,7 @@ def member_list(request):
     }
     return render(request, 'findmate/members.html', context)
 
+
 @login_required
 def make_team(request):
     posting_type = "create"
