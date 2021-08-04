@@ -19,6 +19,9 @@
     .form_header {
         border-bottom: 1px solid #efefef;
         padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
     .form_header h3 {
         font-weight: 600;
@@ -45,7 +48,24 @@
         font-weight: 300;
         outline: none;
     }
-
+    .form_label {
+        font-size: 1rem;
+        font-weight: 300;
+    }
+    .django-ckeditor-widget {
+        width: 100%;
+        margin-top: 1rem;
+    }
+    .btn {
+        padding: .5rem 2rem;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 300;
+        background-color: gray;
+    }
+    .register_team {
+        background-color: #0099cc;
+    }
 </style>
 {% endblock %}
 
@@ -59,20 +79,28 @@
 
     <div class="form_wrapper box">
         <div class="form_header">
-            <h3>새로운 팀 만들기</h3>
-            <span>아래 정보를 기입하여 새로운 팀을 생성합니다.</span>
+            <div class="header_text">
+                <h3>새로운 팀 만들기</h3>
+                <span>아래 정보를 기입하여 새로운 팀을 생성합니다.</span>
+            </div>
+            <div class="btn_list">
+                <a class="btn back_to_list">돌아가기</a>
+                <a class="btn register_team">등록하기</a>
+            </div>
         </div>
         <div class="form_content">
+            <form>
+                {% csrf_token %}
             <div class="form_control">
-                <label for="team_name">팀 이름</label>
+                <label class="form_label" for="team_name">팀 이름</label>
                 <input class="team_input" id="team_name" type="text" placeholder="팀 이름을 입력해주세요. (최대 20자)">
             </div>
             <div class="form_control">
-                <label for="team_desc">팀 소개</label>
+                <label class="form_label" for="team_desc">팀 소개</label>
                 <input class="team_input" id="team_desc" type="text" placeholder="짧은 소개문구를 입력해주세요. (최대 50자)">
             </div>
             <div class="form_control">
-                <label for="team_purpose">팀 목표</label>
+                <label class="form_label" for="team_purpose">팀 목표</label>
                 <select class="team_input" id="team_purpose">
                     <option value="" disabled selected>팀 목표를 선택해주세요</option>
                     <option>창업</option>
@@ -82,9 +110,16 @@
                 </select>
             </div>
             <div class="form_control">
-                <label for="team_purpose">팀 로고</label>
+                <label class="form_label" for="team_purpose">팀 로고</label>
                 <input class="team_input" type="file">
             </div>
+            <div class="form_control">
+                <h4 class="form_label" class="form_label">팀 소개</h4>
+                {{form.media}}
+                {{form.team_detail|safe}}
+            </div>
+            </form>
+            
         </div>
     </div>
 

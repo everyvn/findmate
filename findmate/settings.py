@@ -158,3 +158,28 @@ CKEDITOR_IMAGE_BACKEND = "pillow"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CKEDITOR_CONFIGS = {
+   'default': {
+       'display' : 'block',
+       'width' : '100%',
+       'toolbar_Full': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'], ['Source'],
+            ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+            ['NumberedList','BulletedList'],
+            ['Indent','Outdent'],
+            ['Maximize'],
+            ['Templates']
+        ],
+       'templates_files': [
+           'https://migac.run.goorm.io/static/custom/ckeditor/ckeditor/plugins/templates/templates/default.js',
+       ],
+       'templates': 'default',
+        'extraPlugins': 'justify,liststyle,indent',
+   },
+}
