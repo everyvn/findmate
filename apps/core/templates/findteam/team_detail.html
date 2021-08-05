@@ -1,0 +1,122 @@
+{% extends "index.html" %}
+
+{% block title %}
+{{team.name}}
+{% endblock %}
+
+{% block style %}
+<style>
+    .make_team_wrapper{
+        padding: 2rem 1rem;
+    }
+    .box {
+        border:1px solid #efefef;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 30px #eee;
+        width: 1280px;
+        margin: auto;
+    }
+    .form_header {
+        border-bottom: 1px solid #efefef;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .form_header h3 {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+    .form_header span {
+        font-size: .8rem;
+        color: gray;
+    }
+    .form_content {
+        padding: 0 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .content_count {
+        font-size: .8rem;
+        color: gray;
+        margin: 2rem 0;
+        font-weight: 400;
+    }
+    .team_box {
+        border: 1px solid #efefef;
+        padding: 1rem;
+        margin: 1rem 1rem 1rem 0;
+        text-align: center;
+    }
+    .team_box img {
+        width: 120px;
+        border-radius: 50%;
+        border: 1px solid #efefef;
+    }
+    .team_box h4 {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-top: 1rem;
+    }
+    .team_box span {
+        font-size: .8rem;
+        color: gray;
+        font-weight: 300;
+    }
+    .create_team {
+        width: 120px;
+        height: 120px;
+        background-color: #ffffff;
+        border: 1px solid #efefef;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .create_team h3 {
+        font-size: 2rem;
+    }
+    .team_box:hover {
+        background-color: #efefef;
+        box-shadow: 0 0 15px 1px #efefef;
+    }
+</style>
+{% endblock %}
+
+{% block header_content %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="make_team_wrapper">
+
+    <div class="form_wrapper box">
+            <div class="form_header">
+                <div class="header_text">
+                    <h3>팀 선택</h3>
+                    <span>모집공고를 생성할 팀을 선택해주세요.</span>
+                </div>
+            </div>
+            <div class="form_content">
+                {% for team in teams %}
+                    <a href="{% url 'core:team_recruit' team.pk %}" class="team_box">
+                        <img src="{{team.logo.url}}">
+                        <h4>{{team.name}}</h4>
+                        <span>{{team.get_purpose_display}}</span>
+                    </a>
+                {% endfor %}
+                <a class="team_box" href="/make_team">
+                    <div class="create_team"><h3>+</h3></div>
+                    <h4>새로운 팀 만들기</h4>
+                    <span>새로운 팀을 구성합니다.</span>
+                </a>
+            </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

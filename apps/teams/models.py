@@ -40,6 +40,13 @@ class Team(BaseModel):
                                    options={'quality':90},
                                    blank=True,
                                    null=True)
+    team_banner = ProcessedImageField(upload_to = team_img_path,
+                                   processors = [ResizeToFill(
+                                       width=1280, height=480, upscale=True)],
+                                   format='JPEG',
+                                   options={'quality':90},
+                                   blank=True,
+                                   null=True)
     team_detail = RichTextUploadingField(config_name='default', blank=True, null=True)
 
     def __str__(self):

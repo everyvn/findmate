@@ -45,6 +45,7 @@ def update_team(request, team_pk):
     posting_type = "update"
     team = get_object_or_404(Team, pk=team_pk)
     if request.method == 'POST':
+        print('업데이트 시작')
         form = TeamRegisterForm(request.POST, request.FILES, instance=team)
         print(form)
         if form.is_valid():

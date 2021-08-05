@@ -27,6 +27,10 @@ class TeamRegisterForm(forms.ModelForm):
         'class':'hidden',
         'required':'required'
     }))
+    team_banner = forms.FileField(label='팀 배너', widget=forms.FileInput(attrs={
+        'class':'hidden',
+        'required':'required'
+    }))
     class Meta:
         model = Team
         field = '__all__'
