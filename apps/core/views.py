@@ -4,7 +4,7 @@ from apps.member.models import *
 from apps.teams.forms import TeamRegisterForm, TeamRecruitForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+# hello
 def main_page(request):
     teams = Team.objects.all()
     context = {
