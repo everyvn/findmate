@@ -80,7 +80,6 @@ def team_recruit(request, team_pk):
         if form.is_valid():
             newRecruit = form.save(commit=False)
             newRecruit.team = team
-            print(newRecruit)
             newRecruit.save()
             form.save_m2m()
 
@@ -97,23 +96,23 @@ def team_recruit(request, team_pk):
 @login_required
 def update_recruit(request, recruit_pk):
     posting_type = "update"
-    team = get_object_or_404(Team, pk=team_pk)
+    recruit = get_object_or_404(FindMember, pk=recruit_pk)
+    team = recruit.team
     if request.method == 'POST':
-        print('업데이트 시작', posting_type, team)
-        form = TeamRegisterForm(request.POST, request.FILES, instance=team)
-        print(form)
+        form = TeamRecruitForm(request.POST, request.FILES, instance=recruit)
         if form.is_valid():
-            print('The form is valid')
-            newTeam = form.save(commit=False)
-            newTeam.save()
+            newRecruit = form.save(commit=False)
+            newRecruit.team = team
+            newRecruit.save()
             form.save_m2m()
 
             return redirect('core:main_page')
     else:
         print('업데이트 페이지 진입')
-        form = TeamRegisterForm(instance=team)
+        form = TeamRecruitForm(instance=recruit)
     context = {
         'team':team,
+        'recruit':recruit,
         'form':form,
         'posting_type':posting_type,
     }

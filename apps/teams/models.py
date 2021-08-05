@@ -65,11 +65,11 @@ class RegisteredMember(BaseModel):
 
 
 CAREER_LEVEL = [
-    ('1', 'FRESHMAN'),
-    ('2', '~2 YEARS'),
-    ('3', '3~4 YEARS'),
-    ('4', '5 YEARS~'),
-    ('5', '10 YEARS~'),
+    ('1','경력 무관'),
+    ('2','2년 미만'),
+    ('3','5년 미만'),
+    ('4','10년 미만'),
+    ('5','10년 이상'),
 ]
 
 class FindMember(BaseModel):
