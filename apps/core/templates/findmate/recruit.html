@@ -104,7 +104,7 @@
 <div class="make_team_wrapper">
 
     <div class="form_wrapper box">
-        <form method="POST" action="{% if posting_type == 'create' %}{% url 'core:make_team' %}{% else  %}{% url 'core:update_team' team.pk %}{% endif %}" enctype="multipart/form-data">
+        <form method="POST" action="{% if posting_type == 'create' %}{% url 'core:team_recruit' team.pk %}{% else  %}{% url 'core:update_team' team.pk %}{% endif %}" enctype="multipart/form-data">
             <div class="form_header">
                 <div class="header_text">
                     <h3>모집공고 만들기</h3>
@@ -132,6 +132,10 @@
                 <div class="form_control">
                     <label class="form_label" for="id_purpose">모집 인원</label>
                     {{form.manpower}}
+                </div>
+                <div class="form_control">
+                    <label class="form_label" for="id_purpose">경력 연차</label>
+                    {{form.career}}
                 </div>
                 <div class="form_control">
                     <label class="form_label" for="id_purpose">담당자명</label>

@@ -26,7 +26,6 @@ def make_team(request):
     posting_type = "create"
     if request.method == 'POST':
         form = TeamRegisterForm(request.POST, request.FILES)
-        print(form)
         if form.is_valid():
             newTeam = form.save(commit=False)
             newTeam.save()
@@ -73,20 +72,23 @@ def team_select(request):
     return render(request, 'findmate/select_team.html', context)
 
 @login_required
-def team_recruit(request):
+def team_recruit(request, team_pk):
     posting_type = "create"
+    team = get_object_or_404(Team, pk=team_pk)
     if request.method == 'POST':
         form = TeamRecruitForm(request.POST, request.FILES)
-        print(form)
         if form.is_valid():
-            newTeam = form.save(commit=False)
-            newTeam.save()
+            newRecruit = form.save(commit=False)
+            newRecruit.team = team
+            print(newRecruit)
+            newRecruit.save()
             form.save_m2m()
 
             return redirect('core:main_page')
     else:
         form = TeamRecruitForm()
     context = {
+        'team':team,
         'form':form,
         'posting_type':posting_type,
     }

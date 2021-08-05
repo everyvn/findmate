@@ -102,11 +102,11 @@
             </div>
             <div class="form_content">
                 {% for team in teams %}
-                    <div class="team_box">
+                    <a href="{% url 'core:team_recruit' team.pk %}" class="team_box">
                         <img src="{{team.logo.url}}">
                         <h4>{{team.name}}</h4>
                         <span>{{team.get_purpose_display}}</span>
-                    </div>
+                    </a>
                 {% endfor %}
                 <a class="team_box" href="/make_team">
                     <div class="create_team"><h3>+</h3></div>

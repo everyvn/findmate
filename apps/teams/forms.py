@@ -77,4 +77,4 @@ class TeamRecruitForm(forms.ModelForm):
     class Meta:
         model = FindMember
         field = '__all__'
-        exclude = ()
+        exclude = ('team',)

@@ -12,7 +12,7 @@ urlpatterns = [
     path('team_select/', team_select, name="team_select"),
     # 멤버 관련
     path('update_recruit/<str:recruit_pk>/', update_recruit, name="update_recruit"),
-    path('team_recruit/', team_recruit, name="team_recruit"),
+    path('team_recruit/<str:team_pk>/', team_recruit, name="team_recruit"),
     path('members/', member_list, name="member_list"),
     path('', main_page, name="main_page"),
 ]
