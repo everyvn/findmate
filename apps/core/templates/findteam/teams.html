@@ -22,6 +22,8 @@
     .team_img{
         margin: auto;
         display: block;
+        width: 100%;
+        height: auto;
     }
     .team_info {
         padding: 1rem;
@@ -97,7 +99,11 @@
 
     {% for team in teams %}
     <div class="team_box">
-        <img class="team_img" src="https://picsum.photos/400/300">
+        {% if team.team_banner %}
+        <img class="team_img" src="{{team.team_banner.url}}">
+        {% else %}
+        <img class="team_img" src="https://picsum.photos/1280/480">
+        {% endif %}
         <div class="team_info">
             {% if team.logo %}
             <img class="team_logo" src="{{team.logo.url}}">

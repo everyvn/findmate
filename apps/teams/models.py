@@ -40,6 +40,13 @@ class Team(BaseModel):
                                    options={'quality':90},
                                    blank=True,
                                    null=True)
+    team_banner = ProcessedImageField(upload_to = team_img_path,
+                                   processors = [ResizeToFill(
+                                       width=1280, height=480, upscale=True)],
+                                   format='JPEG',
+                                   options={'quality':90},
+                                   blank=True,
+                                   null=True)
     team_detail = RichTextUploadingField(config_name='default', blank=True, null=True)
 
     def __str__(self):
@@ -65,11 +72,11 @@ class RegisteredMember(BaseModel):
 
 
 CAREER_LEVEL = [
-    ('1', 'FRESHMAN'),
-    ('2', '~2 YEARS'),
-    ('3', '3~4 YEARS'),
-    ('4', '5 YEARS~'),
-    ('5', '10 YEARS~'),
+    ('1','경력 무관'),
+    ('2','2년 미만'),
+    ('3','5년 미만'),
+    ('4','10년 미만'),
+    ('5','10년 이상'),
 ]
 
 class FindMember(BaseModel):

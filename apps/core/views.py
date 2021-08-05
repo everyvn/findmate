@@ -26,7 +26,6 @@ def make_team(request):
     posting_type = "create"
     if request.method == 'POST':
         form = TeamRegisterForm(request.POST, request.FILES)
-        print(form)
         if form.is_valid():
             newTeam = form.save(commit=False)
             newTeam.save()
@@ -46,6 +45,7 @@ def update_team(request, team_pk):
     posting_type = "update"
     team = get_object_or_404(Team, pk=team_pk)
     if request.method == 'POST':
+        print('업데이트 시작')
         form = TeamRegisterForm(request.POST, request.FILES, instance=team)
         print(form)
         if form.is_valid():
@@ -73,20 +73,22 @@ def team_select(request):
     return render(request, 'findmate/select_team.html', context)
 
 @login_required
-def team_recruit(request):
+def team_recruit(request, team_pk):
     posting_type = "create"
+    team = get_object_or_404(Team, pk=team_pk)
     if request.method == 'POST':
         form = TeamRecruitForm(request.POST, request.FILES)
-        print(form)
         if form.is_valid():
-            newTeam = form.save(commit=False)
-            newTeam.save()
+            newRecruit = form.save(commit=False)
+            newRecruit.team = team
+            newRecruit.save()
             form.save_m2m()
 
             return redirect('core:main_page')
     else:
         form = TeamRecruitForm()
     context = {
+        'team':team,
         'form':form,
         'posting_type':posting_type,
     }
@@ -95,23 +97,23 @@ def team_recruit(request):
 @login_required
 def update_recruit(request, recruit_pk):
     posting_type = "update"
-    team = get_object_or_404(Team, pk=team_pk)
+    recruit = get_object_or_404(FindMember, pk=recruit_pk)
+    team = recruit.team
     if request.method == 'POST':
-        print('업데이트 시작', posting_type, team)
-        form = TeamRegisterForm(request.POST, request.FILES, instance=team)
-        print(form)
+        form = TeamRecruitForm(request.POST, request.FILES, instance=recruit)
         if form.is_valid():
-            print('The form is valid')
-            newTeam = form.save(commit=False)
-            newTeam.save()
+            newRecruit = form.save(commit=False)
+            newRecruit.team = team
+            newRecruit.save()
             form.save_m2m()
 
             return redirect('core:main_page')
     else:
         print('업데이트 페이지 진입')
-        form = TeamRegisterForm(instance=team)
+        form = TeamRecruitForm(instance=recruit)
     context = {
         'team':team,
+        'recruit':recruit,
         'form':form,
         'posting_type':posting_type,
     }

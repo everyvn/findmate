@@ -57,6 +57,7 @@
         margin-top: 1rem;
     }
     .btn {
+        cursor: pointer;
         padding: .5rem 2rem;
         color: #ffffff;
         font-size: 1rem;
@@ -102,7 +103,6 @@
 {% block content %}
 
 <div class="make_team_wrapper">
-
     <div class="form_wrapper box">
         <form method="POST" action="{% if posting_type == 'create' %}{% url 'core:make_team' %}{% else  %}{% url 'core:update_team' team.pk %}{% endif %}" enctype="multipart/form-data">
             <div class="form_header">
@@ -129,19 +129,17 @@
                 </div>
                 <div class="form_control">
                     <label class="form_label" for="id_purpose">팀 목표</label>
-                    <!-- <select class="team_input" id="team_purpose">
-                        <option value="" disabled selected>팀 목표를 선택해주세요</option>
-                        <option>창업</option>
-                        <option>사이드프로젝트</option>
-                        <option>취미</option>
-                        <option>기타</option>
-                    </select> -->
                     {{form.purpose}}
                 </div>
                 <div class="form_control">
                     <span class="form_label">팀 로고</span>
                     <label class="upload_label" for="id_logo">업로드 (200x200)</label>
                     {{form.logo}}
+                </div>
+                <div class="form_control">
+                    <span class="form_label">팀 배너</span>
+                    <label class="upload_label" for="id_team_banner">업로드 (1280x480)</label>
+                    {{form.team_banner}}
                 </div>
                 <div class="form_control">
                     <h4 class="form_label" class="form_label">팀 소개</h4>
