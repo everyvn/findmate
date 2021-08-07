@@ -121,7 +121,9 @@
         display: flex;
     }
     .tab_left {
-        width: 280px;
+        width: 30%;
+        max-height: 460px;
+        overflow: scroll;
     }
     .tab_left ul li{
         padding: 1rem .5rem;
@@ -139,8 +141,13 @@
         font-weight: 300;
     }
     .tab_content {
-        width: 100%;
+        width: 70%;
         padding: 1rem;
+        max-height: 460px;
+        overflow: scroll;
+    }
+    .tab_content img {
+        max-width: 100%;
     }
     .hidden {
         display: none;
@@ -262,11 +269,30 @@
             console.log('data: ', data)
             var list = data
             for(var i in list){
-                var item = `<li><span class="hidden">${list[i].id}</span><h5>${list[i].title}</h5><span>${list[i].manpower}명 모집 중</span></li>`
+                var item = `<li class='notice_item' data-content='${list[i].id}'><h5>${list[i].title}</h5><span>${list[i].manpower}명 모집 중</span></li>`
                 wrapper.innerHTML += item
+            }
+        })
+        .then(() => {
+            var notices = document.querySelectorAll('.notice_item')
+            for(o=0;o<notices.length;o++){
+                notices[o].addEventListener('click', function(){
+                    notice_detail(this.dataset.content)
+                })
             }
         })
     }
     
+    // 모집공고 상세 불러오기
+    function notice_detail(notice_pk){
+        var content_wrapper = document.querySelector('.tab_content')
+        content_wrapper.innerHTML = ''
+        let content_url = `/api/notice_detail/${notice_pk}`
+        fetch(content_url)
+        .then((resp) => resp.json())
+        .then(function(data){
+            content_wrapper.innerHTML = data.msg
+        })
+    }
 </script>
 {% endblock %}
