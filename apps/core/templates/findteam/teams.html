@@ -56,6 +56,7 @@
         padding: 1rem;
         font-size: .9rem;
         font-weight: 300;
+        z-index: 8;
     }
     .team_name {
         display: flex;
@@ -72,6 +73,77 @@
     span.team_category {
         font-size: .8rem;
         color: gray;
+    }
+    body {
+        position: relative;
+    }
+    .popup_wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+    .popup_bg {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: .5;
+        position: relative;
+    }
+    .popup_window {
+        position: absolute;
+        width: 1080px;
+        height: 580px;
+        top: calc(50vh - 290px);
+        left: calc(50vw - 540px);
+        background-color: white;
+        padding: 2rem 1.5rem;
+        overflow: scroll;
+    }
+    .career_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #EFEFEF;
+        padding-bottom: 1rem;
+    }
+    .close_btn {
+        color: gray;
+        font-size: .9rem;
+        cursor: pointer;
+    }
+    .close_btn i {
+        color: gray;
+        margin-right: .5rem;
+    }
+    .career_tab {
+        display: flex;
+    }
+    .tab_left {
+        width: 280px;
+    }
+    .tab_left ul li{
+        padding: 1rem .5rem;
+        border-bottom: 1px solid #EFEFEF;
+    }
+    .tab_left ul li:hover {
+        background-color: #fafafa;
+    }
+    .tab_left ul li h5 {
+        font-weight: 500;
+    }
+    .tab_left ul li span {
+        font-size: .8rem;
+        color: gray;
+        font-weight: 300;
+    }
+    .tab_content {
+        width: 100%;
+        padding: 1rem;
+    }
+    .hidden {
+        display: none;
     }
 </style>
 {% endblock %}
@@ -98,13 +170,13 @@
 <div class="team_box_wrapper">
 
     {% for team in teams %}
-    <a href="{% url 'core:team_detail' team.pk %}" class="team_box">
+    <div class="team_box">
         {% if team.team_banner %}
-        <img class="team_img" src="{{team.team_banner.url}}">
+        <a href="{% url 'core:team_detail' team.pk %}"><img class="team_img" src="{{team.team_banner.url}}"></a>
         {% else %}
-        <img class="team_img" src="https://picsum.photos/1280/480">
+        <a href="{% url 'core:team_detail' team.pk %}"><img class="team_img" src="https://picsum.photos/1280/480"></a>
         {% endif %}
-        <div class="team_info">
+        <a href="{% url 'core:team_detail' team.pk %}" class="team_info">
             {% if team.logo %}
             <img class="team_logo" src="{{team.logo.url}}">
             {% else %}
@@ -118,14 +190,83 @@
                 <span class='team_desc'>{{team.short_description}}</span>
             </div>
             
-        </div>
+        </a>
         {% if team.findmember_set.all %}
-        <div class="career_info">
+        <div class="career_info" data-team="{{team.pk}}">
             <span>함께할 {{team.findmember_set.all|length}}개의 포지션을 찾고있어요</span>
         </div>
         {% endif %}
-    </a>
+    </div>
     {% endfor %}
 
 </div>
+<div class="popup_wrapper hidden">
+    <div class="popup_bg"></div>
+    <div class="popup_window">
+        <div class="career_header">
+            <div>
+                <h4>FindMate팀의 모집공고</h4>
+                <span>모집공고가 3개 있습니다.</span>
+            </div>
+            <span class="close_btn"><i class="far fa-times-circle"></i>닫기</span>
+        </div>
+        <div class="career_tab">
+            <div class="tab_left">
+                <ul>
+                    <li><h5>디자이너 구합니다.</h5><span>5명 / 10년 이상</span></li>
+                    <li><h5>참신한 기획자를 찾아요!</h5><span>5명 / 10년 이상</span></li>
+                    <li><h5>저희를 구원해줄 투자자 어디없나요</h5><span>5명 / 10년 이상</span></li>
+                </ul>
+            </div>
+            <div class="tab_content">
+                this is content
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<script>
+    // 팝업창 모달 토글
+    career_btn = document.querySelectorAll('.career_info')
+    popup_wrapper = document.querySelector('.popup_wrapper')
+    popup_bg = document.querySelector('.popup_bg')
+    close_btn = document.querySelector('.close_btn')
+    for(i=0;i<career_btn.length;i++){
+        career_btn[i].addEventListener('click', function(){
+            popup_wrapper.classList.toggle('hidden');
+            notice_list(this.dataset.team)
+        })
+    }
+    close_btn.addEventListener('click', () => {
+        popup_close()
+    })
+    popup_bg.addEventListener('click', () => {
+        popup_close()
+    })
+    function popup_close(){
+        popup_wrapper.classList.add('hidden')
+    }
+
+    // 팝업창 모집 리스트 불러오기
+    
+    function notice_list(team_pk){
+        var wrapper = document.querySelector('.tab_left > ul')
+        wrapper.innerHTML = ''
+        let url = `/api/notice_list/${team_pk}`
+        console.log(url)
+        fetch(url)
+        .then((resp) => resp.json())
+        .then(function(data){
+            console.log('data: ', data)
+            var list = data
+            for(var i in list){
+                var item = `<li><span class="hidden">${list[i].id}</span><h5>${list[i].title}</h5><span>${list[i].manpower}명 모집 중</span></li>`
+                wrapper.innerHTML += item
+            }
+        })
+    }
+    
+</script>
 {% endblock %}
