@@ -7,6 +7,7 @@ app_name = "core"
 
 urlpatterns = [
     # 팀 관련
+    path('team_detail/<str:team_pk>/', team_detail, name="team_detail"),
     path('update_team/<str:team_pk>/', update_team, name="update_team"),
     path('make_team/', make_team, name="make_team"),
     path('team_select/', team_select, name="team_select"),

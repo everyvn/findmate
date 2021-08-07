@@ -98,7 +98,7 @@
 <div class="team_box_wrapper">
 
     {% for team in teams %}
-    <div class="team_box">
+    <a href="{% url 'core:team_detail' team.pk %}" class="team_box">
         {% if team.team_banner %}
         <img class="team_img" src="{{team.team_banner.url}}">
         {% else %}
@@ -124,7 +124,7 @@
             <span>함께할 {{team.findmember_set.all|length}}개의 포지션을 찾고있어요</span>
         </div>
         {% endif %}
-    </div>
+    </a>
     {% endfor %}
 
 </div>
