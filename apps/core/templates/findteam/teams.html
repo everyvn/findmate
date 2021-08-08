@@ -226,9 +226,9 @@
             </div>
 
         </a>
-        {% if team.findmember_set.all %}
+        {% if team.find_member %}
         <div class="career_info" data-team="{{team.pk}}">
-            <span>함께할 {{team.findmember_set.all|length}}개의 포지션을 찾고있어요</span>
+            <span>함께할 {{team.find_member.all|length}}개의 포지션을 찾고있어요</span>
         </div>
         {% endif %}
     </div>
