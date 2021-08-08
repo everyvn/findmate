@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFit
@@ -9,6 +9,7 @@ from django.conf import settings
 from apps.core.models import BaseModel
 from ckeditor_uploader.fields import RichTextUploadingField
 from taggit.managers import TaggableManager
+import os
 
 # Create your models here.
 
@@ -55,6 +56,12 @@ class Profile(BaseModel):
     @property
     def latitude(self):
         return self.point[1]
+
+    # 유저 삭제 시 media 폴더 프로필 사진 삭제
+    def delete(self, *args, **kwargs):
+        if self.picture:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.picture.path))
+        super(Profile, self).delete(*args, **kwargs)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
