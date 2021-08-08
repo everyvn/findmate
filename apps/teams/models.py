@@ -24,28 +24,6 @@ def team_img_path(instance, filename):
     pid = ' '.join(arr)
     extension = filename.split('.')[-1]
     return 'team/{}.{}'.format(pid, extension)
-
-class TeamOrg(MPTTModel):
-    parent = TreeForeignKey('self', verbose_name='parent', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
-    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
-    position = models.CharField(verbose_name='직책', max_length=30)
-
-    class Meta:
-        ordering = ['tree_id', 'lft']
-
-    class MPTTMeta:
-        order_insertion_by = ['parent']
-
-    @property
-    def title(self):
-        return self.team.name
-
-    def __str__(self):
-        try:
-            if self.team:
-                return f"{self.team.name} 조직도"
-        except:
-            return self.parent.__str__()
     
 
 PURPOSE_CHOICE = [
@@ -76,7 +54,6 @@ class Team(BaseModel):
                                    blank=True,
                                    null=True)
     team_detail = RichTextUploadingField(config_name='default', blank=True, null=True)
-    team_org = models.OneToOneField(TeamOrg, related_name='team',verbose_name="조직도", on_delete=models.SET_NULL, null=True, blank=True, limit_choices_to={'level':0})
 
     def __str__(self):
         return '%s' % self.name
@@ -87,6 +64,21 @@ class Team(BaseModel):
             os.remove(os.path.join(settings.MEDIA_ROOT, self.team_banner.path))
         super(Team, self).delete(*args, **kwargs)
 
+class TeamOrg(MPTTModel):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
+    parent = TreeForeignKey('self', verbose_name='parent', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    position = models.CharField(verbose_name='직책', max_length=30, default="팀장")
+
+    class Meta:
+        ordering = ['tree_id', 'lft']
+
+    class MPTTMeta:
+        order_insertion_by = ['parent']
+
+    @property
+    def title(self):
+        return self.team.name
 
 REG_STATUS = [
     ('1', 'REGISTERED'),

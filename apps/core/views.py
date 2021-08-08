@@ -124,8 +124,10 @@ def update_recruit(request, recruit_pk):
 @login_required
 def team_detail(request, team_pk):
     team = get_object_or_404(Team, pk=team_pk)
+    team_org = TeamOrg.objects.filter(team=team_pk)
     context = {
         'team':team,
+        'team_org':team_org,
     }
     return render(request, 'findteam/team_detail.html', context)
 
