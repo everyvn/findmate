@@ -92,7 +92,7 @@
     }
 
     .popup_wrapper {
-        position: fixed;
+        position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
@@ -111,8 +111,8 @@
         position: absolute;
         width: 1080px;
         height: 580px;
-        top: calc(50vh - 290px);
-        left: calc(50vw - 540px);
+        /* top: calc(50vh - 290px);
+        left: calc(50vw - 540px); */
         background-color: white;
         padding: 2rem 1.5rem;
         overflow: scroll;
@@ -226,7 +226,11 @@
             </div>
 
         </a>
+<<<<<<< HEAD
         {% if team.find_member.all %}
+=======
+        {% if team.find_member %}
+>>>>>>> minwoo
         <div class="career_info" data-team="{{team.pk}}">
             <span>함께할 {{team.find_member.all|length}}개의 포지션을 찾고있어요</span>
         </div>
