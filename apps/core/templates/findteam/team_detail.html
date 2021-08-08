@@ -185,10 +185,10 @@
             <h4>현재 팀원 ({{team.team_member.count}}명)</h4>
             <div class="member_list">
                 {% for member in team.team_member.all %}
-                <div class="member_item">
-                    <img src="https://picsum.photos/200/200">
+                <a href="{% url 'member:member_info' member.pk %}" class="member_item">
+                    <img src="{{member.picture.url}}">
                     <span>{{member.name}}</span>
-                </div>
+                </a>
                 {% endfor %}
             </div>
         </div>
