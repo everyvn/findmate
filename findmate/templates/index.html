@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,19 +8,31 @@
     <title>Find Mate - {% block title %}{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <style>
         * {
-            font-family: 'Noto Sans KR', sans-serif;;
+            font-family: 'Noto Sans KR', sans-serif;
+            ;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             text-decoration: none;
             color: black;
         }
+
+        body,
+        html {
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
         ul {
             list-style: none;
         }
+
         .gnb {
             display: flex;
             border-bottom: 1px solid #efefef;
@@ -27,17 +40,21 @@
             align-items: center;
             padding: 2rem;
         }
+
         .main_nav_ul {
             display: flex;
         }
+
         .main_nav_ul li {
             margin-left: 2rem;
         }
+
         .main_contents {
             background-color: #fafafa;
         }
+
         /* 헤더 컨텐츠(필터) 시작 */
-        .filter{
+        .filter {
             height: 60px;
             background-color: #ffffff;
             display: flex;
@@ -46,12 +63,14 @@
             padding: 1rem;
             font-weight: 300;
         }
+
         .filter_item_list {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        .filter_item_list > span {
+
+        .filter_item_list>span {
             height: 60px;
             width: 120px;
             display: flex;
@@ -59,15 +78,18 @@
             justify-content: center;
             align-items: center;
         }
+
         .filter span:hover {
             cursor: pointer;
             text-decoration: underline;
         }
+
         /* 헤더 컨텐츠(필터) 끝 */
     </style>
     {% block style %}
     {% endblock %}
 </head>
+
 <body>
     <header>
         <nav class="gnb">
@@ -92,6 +114,7 @@
         {% block content %}
         {% endblock %}
     </div>
-    
+
 </body>
+
 </html>

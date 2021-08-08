@@ -9,9 +9,11 @@
     .team_box_wrapper {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        width: 1280px;;
+        width: 1280px;
+        ;
         margin: auto;
     }
+
     .team_box {
         margin: 1rem auto 0;
         border: 1px solid #efefef;
@@ -19,31 +21,36 @@
         background-color: white;
         box-shadow: 0px 0px 30px #eee;
     }
-    .team_img{
+
+    .team_img {
         margin: auto;
         display: block;
         width: 100%;
         height: auto;
     }
+
     .team_info {
         padding: 1rem;
         display: flex;
         align-items: center;
     }
+
     .team_info h4 {
         font-size: 1.2em;
         font-weight: 400;
-        max-width:280px;
+        max-width: 280px;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 1; 
+        -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
     }
+
     .team_info span {
         font-size: .9rem;
         font-weight: 300;
     }
+
     .team_info .team_logo {
         width: 80px;
         height: 80px;
@@ -51,27 +58,127 @@
         border-radius: 50%;
         margin-right: 1rem;
     }
+
     .career_info {
         border-top: 1px solid #efefef;
         padding: 1rem;
         font-size: .9rem;
         font-weight: 300;
+        z-index: 8;
     }
+
     .team_name {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
+
     .team_desc {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2; 
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
     }
+
     span.team_category {
         font-size: .8rem;
         color: gray;
+    }
+
+    /* 팝업 관련 */
+    body {
+        position: relative;
+    }
+
+    .popup_wrapper {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    .popup_bg {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        opacity: .5;
+        position: relative;
+    }
+
+    .popup_window {
+        position: absolute;
+        width: 1080px;
+        height: 580px;
+        top: calc(50vh - 290px);
+        left: calc(50vw - 540px);
+        background-color: white;
+        padding: 2rem 1.5rem;
+        overflow: scroll;
+    }
+
+    .career_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #EFEFEF;
+        padding-bottom: 1rem;
+    }
+
+    .close_btn {
+        color: gray;
+        font-size: .9rem;
+        cursor: pointer;
+    }
+
+    .close_btn i {
+        color: gray;
+        margin-right: .5rem;
+    }
+
+    .career_tab {
+        display: flex;
+    }
+
+    .tab_left {
+        width: 30%;
+        max-height: 460px;
+        overflow: scroll;
+    }
+
+    .tab_left ul li {
+        padding: 1rem .5rem;
+        border-bottom: 1px solid #EFEFEF;
+    }
+
+    .tab_left ul li:hover {
+        background-color: #fafafa;
+    }
+
+    .tab_left ul li h5 {
+        font-weight: 500;
+    }
+
+    .tab_left ul li span {
+        font-size: .8rem;
+        color: gray;
+        font-weight: 300;
+    }
+
+    .tab_content {
+        width: 70%;
+        padding: 1rem;
+        max-height: 460px;
+        overflow: scroll;
+    }
+
+    .tab_content img {
+        max-width: 100%;
+    }
+
+    .hidden {
+        display: none;
     }
 </style>
 {% endblock %}
@@ -88,7 +195,7 @@
     <div class="create_post">
         <a href="{% url 'core:make_team' %}">새로운 팀 만들기</a>
     </div>
-    
+
 </div>
 
 {% endblock %}
@@ -100,11 +207,11 @@
     {% for team in teams %}
     <div class="team_box">
         {% if team.team_banner %}
-        <img class="team_img" src="{{team.team_banner.url}}">
+        <a href="{% url 'core:team_detail' team.pk %}"><img class="team_img" src="{{team.team_banner.url}}"></a>
         {% else %}
-        <img class="team_img" src="https://picsum.photos/1280/480">
+        <a href="{% url 'core:team_detail' team.pk %}"><img class="team_img" src="https://picsum.photos/1280/480"></a>
         {% endif %}
-        <div class="team_info">
+        <a href="{% url 'core:team_detail' team.pk %}" class="team_info">
             {% if team.logo %}
             <img class="team_logo" src="{{team.logo.url}}">
             {% else %}
@@ -117,10 +224,10 @@
                 </div>
                 <span class='team_desc'>{{team.short_description}}</span>
             </div>
-            
-        </div>
+
+        </a>
         {% if team.findmember_set.all %}
-        <div class="career_info">
+        <div class="career_info" data-team="{{team.pk}}">
             <span>함께할 {{team.findmember_set.all|length}}개의 포지션을 찾고있어요</span>
         </div>
         {% endif %}
@@ -128,4 +235,106 @@
     {% endfor %}
 
 </div>
+<div class="popup_wrapper hidden">
+    <div class="popup_bg"></div>
+    <div class="popup_window">
+        <div class="career_header">
+            <div>
+                <h4>FindMate팀의 모집공고</h4>
+                <span>모집공고가 3개 있습니다.</span>
+            </div>
+            <span class="close_btn"><i class="far fa-times-circle"></i>닫기</span>
+        </div>
+        <div class="career_tab">
+            <div class="tab_left">
+                <ul>
+                    <li>
+                        <h5>디자이너 구합니다.</h5><span>5명 / 10년 이상</span>
+                    </li>
+                    <li>
+                        <h5>참신한 기획자를 찾아요!</h5><span>5명 / 10년 이상</span>
+                    </li>
+                    <li>
+                        <h5>저희를 구원해줄 투자자 어디없나요</h5><span>5명 / 10년 이상</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab_content">
+                this is content
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // 팝업창 모달 토글
+    career_btn = document.querySelectorAll('.career_info')
+    popup_wrapper = document.querySelector('.popup_wrapper')
+    popup_bg = document.querySelector('.popup_bg')
+    close_btn = document.querySelector('.close_btn')
+    html = document.querySelector('html')
+    body = document.querySelector('body')
+    for (i = 0; i < career_btn.length; i++) {
+        career_btn[i].addEventListener('click', function () {
+            popup_wrapper.classList.toggle('hidden');
+            notice_list(this.dataset.team)
+            html.style.overflow = 'hidden'
+            body.style.overflow = 'hidden'
+        })
+    }
+    close_btn.addEventListener('click', () => {
+        popup_close()
+    })
+    popup_bg.addEventListener('click', () => {
+        popup_close()
+
+
+    })
+    function popup_close() {
+        popup_wrapper.classList.add('hidden')
+        html.style.overflow = 'scroll'
+        body.style.overflow = 'scroll'
+    }
+
+    // 팝업창 모집 리스트 불러오기
+
+    function notice_list(team_pk) {
+        var wrapper = document.querySelector('.tab_left > ul')
+        wrapper.innerHTML = ''
+        let url = `/api/notice_list/${team_pk}`
+        console.log(url)
+        fetch(url)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                console.log('data: ', data)
+                var list = data
+                for (var i in list) {
+                    var item = `<li class='notice_item' data-content='${list[i].id}'><h5>${list[i].title}</h5><span>${list[i].manpower}명 모집 중</span></li>`
+                    wrapper.innerHTML += item
+                }
+            })
+            .then(() => {
+                var notices = document.querySelectorAll('.notice_item')
+                for (o = 0; o < notices.length; o++) {
+                    notices[o].addEventListener('click', function () {
+                        notice_detail(this.dataset.content)
+                    })
+                }
+            })
+    }
+
+    // 모집공고 상세 불러오기
+    function notice_detail(notice_pk) {
+        var content_wrapper = document.querySelector('.tab_content')
+        content_wrapper.innerHTML = ''
+        let content_url = `/api/notice_detail/${notice_pk}`
+        fetch(content_url)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                content_wrapper.innerHTML = data.msg
+            })
+    }
+</script>
 {% endblock %}

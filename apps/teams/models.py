@@ -8,7 +8,7 @@ from apps.core.models import BaseModel
 from apps.member.models import Profile
 from django.conf import settings
 from ckeditor_uploader.fields import RichTextUploadingField
-
+import os
 # Create your models here.
 
 
@@ -51,6 +51,12 @@ class Team(BaseModel):
 
     def __str__(self):
         return '%s' % self.name
+
+    def delete(self, *args, **kwargs):
+        if self.logo or self.team_banner:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.logo.path))
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.team_banner.path))
+        super(Team, self).delete(*args, **kwargs)
 
 
 REG_STATUS = [

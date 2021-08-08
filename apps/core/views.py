@@ -118,3 +118,13 @@ def update_recruit(request, recruit_pk):
         'posting_type':posting_type,
     }
     return render(request, 'findmate/recruit.html', context)
+
+
+# 팀 디테일 페이지
+@login_required
+def team_detail(request, team_pk):
+    team = get_object_or_404(Team, pk=team_pk)
+    context = {
+        'team':team,
+    }
+    return render(request, 'findteam/team_detail.html', context)
