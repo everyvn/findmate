@@ -55,6 +55,9 @@ INSTALLED_APPS = [
     'apps.teams',
     'apps.member',
     'apps.api',
+
+    #django-mptt
+    'mptt'
 ]
 
 MIDDLEWARE = [
