@@ -137,7 +137,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'ticketcenter', 'static'),
+    os.path.join(BASE_DIR, 'findmate', 'static'),
 )
 STATIC_ROOT = 'static/'
 MEDIA_URL = '/media/'
