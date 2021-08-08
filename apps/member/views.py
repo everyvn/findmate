@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
+from django.views.generic import DetailView
 # Create your views here.
 
-def member_info(request):
-    profile = get_object_or_404(Profile, user = request.user)
-    context = {
-        'profile':profile,
-    }
-    return render(request, 'member_info/member_info.html', context)
+class MemberInfo(DetailView):
+    model = Profile
+    context_object_name = 'profile'
+    template_name = 'member_info/member_info.html'

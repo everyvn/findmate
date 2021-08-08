@@ -4,5 +4,6 @@ from django.conf import settings
 from .views import *
 
 urlpatterns = [
-    path('', member_info, name='member_info'),
+    path('<int:pk>', MemberInfo.as_view(), name='member_info'),
+
 ]
