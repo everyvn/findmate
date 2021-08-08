@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from apps.teams.models import *
 from apps.member.models import *
-from apps.teams.forms import TeamRegisterForm, TeamRecruitForm
+from apps.teams.forms import *
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
@@ -128,3 +128,27 @@ def team_detail(request, team_pk):
         'team':team,
     }
     return render(request, 'findteam/team_detail.html', context)
+
+
+# 팀 가입 신청 페이지
+@login_required
+def team_register_reqeust(request, team_pk):
+    posting_type = "create"
+    team = get_object_or_404(Team, pk=team_pk)
+    if request.method == 'POST':
+        form = RegisterRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            newRecruit = form.save(commit=False)
+            newRecruit.team = team
+            newRecruit.save()
+            form.save_m2m()
+
+            return redirect('core:main_page')
+    else:
+        form = RegisterRequestForm()
+    context = {
+        'team':team,
+        'form':form,
+        'posting_type':posting_type,
+    }
+    return render(request, 'findteam/team_register.html', context)

@@ -86,7 +86,7 @@ CAREER_LEVEL = [
 ]
 
 class FindMember(BaseModel):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='find_member')
     title = models.CharField(max_length=200)
     essencial = models.CharField(max_length=200)
     plus = models.CharField(max_length=100)

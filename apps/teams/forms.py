@@ -82,3 +82,10 @@ class TeamRecruitForm(forms.ModelForm):
         model = FindMember
         field = '__all__'
         exclude = ('team',)
+
+
+class RegisterRequestForm(forms.ModelForm):
+    class Meta:
+        model = RegisteredMember
+        field = '__all__'
+        exclude = ('user','team','status',)
