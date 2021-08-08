@@ -37,6 +37,7 @@
     .team_members {
         padding-right: 2rem;
         border-right: 1px solid #efefef;
+        min-width: 450px;
     }
     .team_members h4 {
         font-weight: 500;
@@ -194,7 +195,7 @@
         <div class="find_members">
             <h4>모집 공고</h4>
             <span>모집중인 공고가 {{team.findmember_set.all.count}}개 있습니다.</span>
-            <h4 class="check_notice" data-team="{{team.id}}">모집공고 확인하기</h4>
+            <h4 class="check_notice career_info" data-team="{{team.id}}">모집공고 확인하기</h4>
         </div>
     </div>
     
@@ -233,11 +234,10 @@
 
 <script>
     // 팝업창 모달 토글
-    career_btn = document.querySelectorAll('.check_notice')
+    career_btn = document.querySelectorAll('.career_info')
     popup_wrapper = document.querySelector('.popup_wrapper')
     popup_bg = document.querySelector('.popup_bg')
     close_btn = document.querySelector('.close_btn')
-    console.log(career_btn)
     for(i=0;i<career_btn.length;i++){
         career_btn[i].addEventListener('click', function(){
             popup_wrapper.classList.toggle('hidden');
@@ -260,11 +260,9 @@
         var wrapper = document.querySelector('.tab_left > ul')
         wrapper.innerHTML = ''
         let url = `/api/notice_list/${team_pk}`
-        console.log(url)
         fetch(url)
         .then((resp) => resp.json())
         .then(function(data){
-            console.log('data: ', data)
             var list = data
             for(var i in list){
                 var item = `<li class='notice_item' data-content='${list[i].id}'><h5>${list[i].title}</h5><span>${list[i].manpower}명 모집 중</span></li>`
@@ -277,6 +275,7 @@
                 notices[o].addEventListener('click', function(){
                     notice_detail(this.dataset.content)
                 })
+                notice_detail(notices[o].dataset.content)
             }
         })
     }
