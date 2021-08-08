@@ -137,10 +137,13 @@ def team_register_reqeust(request, team_pk):
     team = get_object_or_404(Team, pk=team_pk)
     if request.method == 'POST':
         form = RegisterRequestForm(request.POST, request.FILES)
+        print(form)
         if form.is_valid():
-            newRecruit = form.save(commit=False)
-            newRecruit.team = team
-            newRecruit.save()
+            newRequest = form.save(commit=False)
+            newRequest.team = team
+            newRequest.user = request.user
+            newRequest.status = '1'
+            newRequest.save()
             form.save_m2m()
 
             return redirect('core:main_page')

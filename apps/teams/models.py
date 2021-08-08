@@ -59,24 +59,6 @@ class Team(BaseModel):
         super(Team, self).delete(*args, **kwargs)
 
 
-REG_STATUS = [
-    ('1', 'REGISTERED'),
-    ('2', 'APPROVE'),
-    ('3', 'REJECT'),
-]
-
-
-class RegisteredMember(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                            on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    status = models.CharField(max_length=1, choices=REG_STATUS, null=True)
-    msg = RichTextUploadingField(config_name='default', blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.user} request for {self.team.name}"
-
-
 CAREER_LEVEL = [
     ('1','경력 무관'),
     ('2','2년 미만'),
@@ -99,3 +81,22 @@ class FindMember(BaseModel):
 
     def __str__(self):
         return f"{self.title} of {self.team.name}"
+
+
+REG_STATUS = [
+    ('1', 'REGISTERED'),
+    ('2', 'APPROVE'),
+    ('3', 'REJECT'),
+]
+
+
+class RegisteredMember(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                            on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    notice = models.ForeignKey(FindMember, on_delete=models.CASCADE, null=True, blank=True)
+    status = models.CharField(max_length=1, choices=REG_STATUS, null=True)
+    msg = RichTextUploadingField(config_name='default', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user} request for {self.team.name}"

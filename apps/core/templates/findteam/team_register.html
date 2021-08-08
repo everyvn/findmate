@@ -104,7 +104,7 @@
 
 <div class="make_team_wrapper">
     <div class="form_wrapper box">
-        <form method="POST" action="" enctype="multipart/form-data">
+        <form method="POST" action="{% if posting_type == 'create' %}{% url 'core:team_register_reqeust' team.pk %}{% else %}{% url 'core:team_register_reqeust' team.pk %}{% endif %}" enctype="multipart/form-data">
             <div class="form_header">
                 <div class="header_text">
                     <h3>{{team.name}} 가입신청</h3>
@@ -118,6 +118,14 @@
             <div class="form_content">
                     {% csrf_token %}
                 <div class="form_control">
+                    <label class="form_label" class="form_label" for="id_notice">지원 공고</label>
+                    <select name="notice" id="id_notice">
+                        {% for notice in team.find_member.all %}
+                        <option value="{{notice.pk}}">{{notice.title}}</option>
+                        {% endfor %}
+                    </select>                        
+                </div>
+                <div class="form_control">
                     <h4 class="form_label" class="form_label">소개 입력</h4>
                     {{form.media}}
                     {{form.msg|safe}}
@@ -130,6 +138,6 @@
 </div>
 
 <script>
-    let url = ""
+
 </script>
 {% endblock %}
