@@ -10,7 +10,8 @@ for (i = 0; i < career_btn.length; i++) {
     career_btn[i].addEventListener('click', function () {
         popup_wrapper.classList.toggle('hidden');
         notice_list(this.dataset.team)
-        popUpWindow.style.top = `${((window.innerHeight - popUpWindow.offsetHeight) / 2) + window.scrollY}px`
+        console.log(document.scrollingElement.scrollTop)
+        popUpWindow.style.top = `${((window.innerHeight - popUpWindow.offsetHeight) / 2) + document.scrollingElement.scrollTop}px`
         popUpWindow.style.left = `${(window.innerWidth - popUpWindow.offsetWidth) / 2}px`
         html.style.overflow = 'hidden'
         body.style.overflow = 'hidden'
