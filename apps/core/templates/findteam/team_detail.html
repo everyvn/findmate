@@ -9,45 +9,55 @@
     .main_contents {
         background-color: #ffffff;
     }
+
     .team_wrapper {
         padding: 0rem 2rem;
         width: 1280px;
         margin: auto;
     }
-    .team_wrapper > img {
+
+    .team_wrapper>img {
         width: 100%;
     }
+
     .team_name span {
         font-size: .9rem;
         color: gray;
         font-weight: 300;
     }
+
     .team_header {
         padding: 1rem 0;
     }
+
     .name_desc span {
         font-weight: 300;
     }
+
     .member_and_notice {
         padding: 1rem 0;
         border-top: 1px solid gray;
         border-bottom: 1px solid gray;
         display: flex;
     }
+
     .team_members {
         padding-right: 2rem;
         border-right: 1px solid #efefef;
         min-width: 450px;
     }
+
     .team_members h4 {
         font-weight: 500;
         display: block;
     }
+
     .member_list {
         margin-top: 1rem;
         display: flex;
         align-items: center;
     }
+
     .member_item {
         display: flex;
         flex-direction: column;
@@ -57,17 +67,21 @@
         font-size: .8rem;
         font-weight: 300;
     }
+
     .member_item img {
         width: 48px;
         height: 48px;
         border-radius: 50%;
     }
+
     .find_members {
         padding-left: 2rem;
     }
+
     .team_detail {
         margin: 2rem 0;
     }
+
     .check_notice {
         margin-top: 1rem;
         background-color: #2b2b2b;
@@ -79,14 +93,17 @@
         border-radius: 4px;
         cursor: pointer;
     }
+
     .check_notice:hover {
         background-color: pink;
         color: #2b2b2b;
     }
+
     /* 팝업 관련 */
     body {
         position: relative;
     }
+
     .popup_wrapper {
         position: absolute;
         width: 100%;
@@ -94,6 +111,7 @@
         top: 0;
         left: 0;
     }
+
     .popup_bg {
         width: 100%;
         height: 100%;
@@ -101,6 +119,7 @@
         opacity: .5;
         position: relative;
     }
+
     .popup_window {
         position: absolute;
         width: 1080px;
@@ -111,6 +130,7 @@
         padding: 2rem 1.5rem;
         overflow: scroll;
     }
+
     .career_header {
         display: flex;
         justify-content: space-between;
@@ -118,47 +138,58 @@
         border-bottom: 1px solid #EFEFEF;
         padding-bottom: 1rem;
     }
+
     .close_btn {
         color: gray;
         font-size: .9rem;
         cursor: pointer;
     }
+
     .close_btn i {
         color: gray;
         margin-right: .5rem;
     }
+
     .career_tab {
         display: flex;
     }
+
     .tab_left {
         width: 30%;
         max-height: 460px;
         overflow: scroll;
     }
-    .tab_left ul li{
+
+    .tab_left ul li {
         padding: 1rem .5rem;
         border-bottom: 1px solid #EFEFEF;
     }
+
     .tab_left ul li:hover {
         background-color: #fafafa;
     }
+
     .tab_left ul li h5 {
         font-weight: 500;
     }
+
     .tab_left ul li span {
         font-size: .8rem;
         color: gray;
         font-weight: 300;
     }
+
     .tab_content {
         width: 70%;
         padding: 1rem;
         max-height: 460px;
         overflow: scroll;
     }
+
     .tab_content img {
         max-width: 100%;
     }
+
     .hidden {
         display: none;
     }
@@ -194,11 +225,11 @@
         </div>
         <div class="find_members">
             <h4>모집 공고</h4>
-            <span>모집중인 공고가 {{team.findmember_set.all.count}}개 있습니다.</span>
+            <span>모집중인 공고가 {{team.find_member.all.count}}개 있습니다.</span>
             <h4 class="check_notice career_info" data-team="{{team.id}}">모집공고 확인하기</h4>
         </div>
     </div>
-    
+
     <div class="team_detail">
         {{team.team_detail|safe}}
     </div>
@@ -218,9 +249,15 @@
         <div class="career_tab">
             <div class="tab_left">
                 <ul>
-                    <li><h5>디자이너 구합니다.</h5><span>5명 / 10년 이상</span></li>
-                    <li><h5>참신한 기획자를 찾아요!</h5><span>5명 / 10년 이상</span></li>
-                    <li><h5>저희를 구원해줄 투자자 어디없나요</h5><span>5명 / 10년 이상</span></li>
+                    <li>
+                        <h5>디자이너 구합니다.</h5><span>5명 / 10년 이상</span>
+                    </li>
+                    <li>
+                        <h5>참신한 기획자를 찾아요!</h5><span>5명 / 10년 이상</span>
+                    </li>
+                    <li>
+                        <h5>저희를 구원해줄 투자자 어디없나요</h5><span>5명 / 10년 이상</span>
+                    </li>
                 </ul>
             </div>
             <div class="tab_content">
