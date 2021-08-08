@@ -5,10 +5,13 @@ popup_bg = document.querySelector('.popup_bg')
 close_btn = document.querySelector('.close_btn')
 html = document.querySelector('html')
 body = document.querySelector('body')
+const popUpWindow = document.querySelector('.popup_window')
 for (i = 0; i < career_btn.length; i++) {
     career_btn[i].addEventListener('click', function () {
         popup_wrapper.classList.toggle('hidden');
         notice_list(this.dataset.team)
+        popUpWindow.style.top = `${((window.innerHeight - popUpWindow.offsetHeight) / 2) + window.scrollY}px`
+        popUpWindow.style.left = `${(window.innerWidth - popUpWindow.offsetWidth) / 2}px`
         html.style.overflow = 'hidden'
         body.style.overflow = 'hidden'
     })
