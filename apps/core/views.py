@@ -3,6 +3,7 @@ from apps.teams.models import *
 from apps.member.models import *
 from apps.teams.forms import *
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 # Create your views here.
 
 def main_page(request):
@@ -68,7 +69,7 @@ def update_team(request, team_pk):
 
 @login_required
 def team_select(request):
-    teams = get_object_or_404(Profile, user=request.user).teams.all()
+    teams = Team.objects.filter(team_org__user=request.user, team_org__level=0)
     context = {
         'teams':teams,
     }

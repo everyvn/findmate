@@ -39,6 +39,7 @@
         padding: .5rem 2rem;
         border-radius: 4px;
     }
+
     .name_desc span {
         font-weight: 300;
     }
@@ -138,7 +139,7 @@
                     <span>({{node.position}})</span>
                 </a>
                 {% if not node.is_leaf_node %}
-                    {{children}}
+                {{children}}
                 {% endif %}
                 {% endrecursetree %}
             </div>
@@ -169,11 +170,13 @@
         <div class="career_tab">
             <div class="tab_left">
                 <ul>
-                    <li><h5></h5><span></span></li>
+                    <li>
+                        <h5></h5><span></span>
+                    </li>
                 </ul>
             </div>
             <div class="tab_content">
-                
+
             </div>
         </div>
     </div>

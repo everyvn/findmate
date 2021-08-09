@@ -36,7 +36,6 @@ PURPOSE_CHOICE = [
 class Team(BaseModel):
     name = models.CharField(max_length=20)
     short_description = models.TextField(max_length=1024)
-    team_member = models.ManyToManyField(Profile, blank=True, related_name="teams")
     purpose = models.CharField(max_length=1, choices=PURPOSE_CHOICE, null=True, blank=True)
     logo = ProcessedImageField(upload_to = team_img_path,
                                    processors = [ResizeToFill(
@@ -64,7 +63,7 @@ class Team(BaseModel):
         super(Team, self).delete(*args, **kwargs)
 
 class TeamOrg(MPTTModel):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True, related_name='team_org')
     parent = TreeForeignKey('self', verbose_name='parent', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
     position = models.CharField(verbose_name='직책', max_length=30, default="팀장")
@@ -78,21 +77,6 @@ class TeamOrg(MPTTModel):
     @property
     def title(self):
         return self.team.name
-
-# class TeamOrg(MPTTModel):
-#     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
-#     parent = TreeForeignKey('self', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
-#     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
-#     position = models.CharField(verbose_name='직책', max_length=30, default='팀장')
-
-#     class Meta:
-#         ordering = ['tree_id', 'lft']
-
-#     class MPTTMeta:
-#         order_insertion_by = ['parent']
-
-#     def __str__(self):
-#         return f"{self.team} 조직도"
 
 CAREER_LEVEL = [
     ('1','경력 무관'),
