@@ -159,3 +159,20 @@ def team_register_reqeust(request, team_pk):
         'posting_type':posting_type,
     }
     return render(request, 'findteam/team_register.html', context)
+
+
+# 팀관리 페이지
+@login_required
+def team_management(request, team_pk):
+    team = get_object_or_404(Team, pk=team_pk)
+    context = {
+        'team':team,
+    }
+    return render(request, 'findteam/team_management.html', context)
+
+
+@login_required
+def team_delete(request, team_pk):
+    team = get_object_or_404(Team, pk=team_pk)
+    team.delete()
+    return redirect('/')

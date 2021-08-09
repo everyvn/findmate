@@ -67,7 +67,7 @@ class TeamOrg(MPTTModel):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
     parent = TreeForeignKey('self', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
-    position = models.CharField(verbose_name='직책', max_length=30)
+    position = models.CharField(verbose_name='직책', max_length=30, default='팀장')
 
     class Meta:
         ordering = ['tree_id', 'lft']

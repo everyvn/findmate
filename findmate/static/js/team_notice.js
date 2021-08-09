@@ -10,11 +10,7 @@ for (i = 0; i < career_btn.length; i++) {
     career_btn[i].addEventListener('click', function () {
         popup_wrapper.classList.toggle('hidden');
         notice_list(this.dataset.team)
-        console.log(document.scrollingElement.scrollTop)
-        popUpWindow.style.top = `${((window.innerHeight - popUpWindow.offsetHeight) / 2) + document.scrollingElement.scrollTop}px`
-        popUpWindow.style.left = `${(window.innerWidth - popUpWindow.offsetWidth) / 2}px`
-        html.style.overflow = 'hidden'
-        body.style.overflow = 'hidden'
+        popup_bg_modify()
     })
 }
 close_btn.addEventListener('click', () => {
@@ -30,7 +26,13 @@ function popup_close() {
     html.style.overflow = 'scroll'
     body.style.overflow = 'scroll'
 }
-
+function popup_bg_modify() {
+    console.log(document.scrollingElement.scrollTop)
+    popUpWindow.style.top = `${((window.innerHeight - popUpWindow.offsetHeight) / 2) + document.scrollingElement.scrollTop}px`
+    popUpWindow.style.left = `${(window.innerWidth - popUpWindow.offsetWidth) / 2}px`
+    html.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
+}
 // 팝업창 모집 리스트 불러오기
 
 function notice_list(team_pk) {
