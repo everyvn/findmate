@@ -164,9 +164,15 @@ def team_register_reqeust(request, team_pk):
 # 팀관리 페이지
 @login_required
 def team_management(request, team_pk):
+    # 팀 관리페이지 첫 로딩에 필요한 팀 정보
     team = get_object_or_404(Team, pk=team_pk)
+
+    # 팀 기본정보 관리에 필요한 코드
+    team_base_form = TeamRegisterForm(instance=team)
+
     context = {
         'team':team,
+        'team_base_form':team_base_form,
     }
     return render(request, 'findteam/team_management.html', context)
 
