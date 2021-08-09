@@ -6,16 +6,18 @@
 
 {% block style %}
 <style>
-    .make_team_wrapper{
+    .make_team_wrapper {
         padding: 2rem 1rem;
     }
+
     .box {
-        border:1px solid #efefef;
+        border: 1px solid #efefef;
         background-color: #ffffff;
         box-shadow: 0px 0px 30px #eee;
         width: 1280px;
         margin: auto;
     }
+
     .form_header {
         border-bottom: 1px solid #efefef;
         padding: 1rem 2rem;
@@ -23,20 +25,25 @@
         justify-content: space-between;
         align-items: center;
     }
+
     .form_header h3 {
         font-weight: 600;
         font-size: 1.2rem;
     }
+
     .form_header span {
         font-size: .8rem;
         color: gray;
     }
+
     .form_content {
         padding: 0 2rem;
     }
+
     .form_control {
         margin: 1rem 0;
     }
+
     .team_input {
         margin-left: 2rem;
         width: 480px;
@@ -48,14 +55,17 @@
         font-weight: 300;
         outline: none;
     }
+
     .form_label {
         font-size: 1rem;
         font-weight: 300;
     }
+
     .django-ckeditor-widget {
         width: 100%;
         margin-top: 1rem;
     }
+
     .btn {
         cursor: pointer;
         padding: .5rem 2rem;
@@ -64,10 +74,12 @@
         font-weight: 300;
         background-color: gray;
     }
+
     .register_team {
         background-color: #0099cc;
         border: none;
     }
+
     .form_control select {
         margin-left: 2rem;
         width: 480px;
@@ -79,9 +91,11 @@
         font-weight: 300;
         outline: none;
     }
-    .form_control input[type='file']{
-        display:none;
+
+    .form_control input[type='file'] {
+        display: none;
     }
+
     .upload_label {
         background-color: #0099ee;
         padding: .3rem 1.2rem;
@@ -90,6 +104,7 @@
         color: white;
         margin-left: 2rem;
     }
+
     .form_control #text {
         display: none;
     }
@@ -104,7 +119,9 @@
 
 <div class="make_team_wrapper">
     <div class="form_wrapper box">
-        <form method="POST" action="{% if posting_type == 'create' %}{% url 'core:make_team' %}{% else  %}{% url 'core:update_team' team.pk %}{% endif %}" enctype="multipart/form-data">
+        <form method="POST"
+            action="{% if posting_type == 'create' %}{% url 'core:make_team' %}{% else  %}{% url 'core:update_team' team.pk %}{% endif %}"
+            enctype="multipart/form-data">
             <div class="form_header">
                 <div class="header_text">
                     <h3>새로운 팀 만들기</h3>
@@ -116,7 +133,7 @@
                 </div>
             </div>
             <div class="form_content">
-                    {% csrf_token %}
+                {% csrf_token %}
                 <div class="form_control">
                     <label class="form_label" for="team_name">팀 이름</label>
                     <!-- <input class="team_input" id="team_name" type="text" placeholder="팀 이름을 입력해주세요. (최대 20자)"> -->
@@ -146,7 +163,7 @@
                     {{form.media}}
                     {{form.team_detail|safe}}
                 </div>
-                
+
             </div>
         </form>
     </div>

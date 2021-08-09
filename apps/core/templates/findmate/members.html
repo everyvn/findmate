@@ -114,7 +114,7 @@
 
 <div class="member_box_wrapper">
     {% for member in members %}
-    <a href="{% url 'member_info' member.id %}" class="member_box">
+    <a href="{% url 'member:member_info' member.id %}" class="member_box">
         <div class="member_info">
             {% if member.logo %}
             <img class="member_img" src="{{user.picture.url}}">

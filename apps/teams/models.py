@@ -37,7 +37,7 @@ PURPOSE_CHOICE = [
 class Team(BaseModel):
     name = models.CharField(max_length=20)
     short_description = models.TextField(max_length=1024)
-    # team_member = models.ManyToManyField(Profile, blank=True, related_name="teams")
+    team_member = models.ManyToManyField(Profile, blank=True, related_name="teams")
     purpose = models.CharField(max_length=1, choices=PURPOSE_CHOICE, null=True, blank=True)
     logo = ProcessedImageField(upload_to = team_img_path,
                                    processors = [ResizeToFill(
