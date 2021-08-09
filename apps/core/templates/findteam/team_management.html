@@ -93,7 +93,7 @@
     }
 
     .form_control input[type='file'] {
-        display: none;
+        visibility: hidden;
     }
 
     .upload_label {
@@ -211,16 +211,16 @@
             </div>
             <div class="form_content">
                <ul class="team_menu">
-                   <li class="team_menu_item active_item">
-                       <a class="panel_change" data-group="basic_info"><h4>팀 정보 관리</h4><span>로고/배너 등<br>팀의 기본적인 정보를 관리합니다.</span></a>
+                   <li class="team_menu_item panel_change active_item" data-group="basic_info">
+                       <a class=""><h4>팀 정보 관리</h4><span>로고/배너 등<br>팀의 기본적인 정보를 관리합니다.</span></a>
                        <div class="decorate_triangle"></div>
                     </li>
-                   <li class="team_menu_item">
-                       <a class="panel_change" data-group="org"><h4>조직도 관리</h4><span>팀의 관리자를 설정하고<br>팀원 정보를 관리합니다.</span></a>
+                   <li class="team_menu_item panel_change" data-group="org">
+                       <a class=""><h4>조직도 관리</h4><span>팀의 관리자를 설정하고<br>팀원 정보를 관리합니다.</span></a>
                        <div class="decorate_triangle"></div>
                     </li>
-                   <li class="team_menu_item">
-                       <a class="panel_change" data-group="recruit"><h4>모집공고 관리</h4><span>모집공고 등록/수정/삭제 및<br>지원자를 관리합니다.</span></a>
+                   <li class="team_menu_item panel_change" data-group="recruit">
+                       <a class=""><h4>모집공고 관리</h4><span>모집공고 등록/수정/삭제 및<br>지원자를 관리합니다.</span></a>
                        <div class="decorate_triangle"></div>
                     </li>
                    <li class="team_menu_item">
@@ -238,9 +238,7 @@
                                 <h3>{{team.name}} 팀 정보 수정</h3>
                                 <span>팀의 기본정보를 수정합니다.</span>
                             </div>
-                            <div class="btn_list">
-                                <input type="submit" class="btn register_team" value="수정하기">
-                            </div>
+                            <input type="submit" class="btn register_team" value="수정하기">
                         </div>
                         <div class="form_content">
                                 {% csrf_token %}
@@ -307,6 +305,35 @@
     </div>
 </div>
 
+<!-- 컨텐츠 변경 -->
+<!-- 대체 왜인지 모르겠으나 팝업 부분 밑으로 내려가면 동작안하므로 주의 -->
+<script>
+    header_btn = document.querySelectorAll('.panel_change');
+    content_panel = document.querySelector('.team_mgmt_content_wrapper');
+    content = document.querySelectorAll('.team_mgmt_content');
+
+    for (let i = 0; i < header_btn.length; i++) {
+        (function (idx){
+            header_btn[idx].onclick = () => {
+            teamMenuItemChange(idx)
+            }   
+        })(i);
+    }
+    function teamMenuItemChange(targetIdx){
+        for (let i = 0; i < header_btn.length; i++) {
+            if(i === targetIdx){
+                header_btn[i].classList.add('active_item')
+                content[i].classList.add('active')
+            }else{
+                header_btn[i].classList.remove('active_item')
+                content[i].classList.remove('active')
+            }
+        }
+    }
+</script>
+<!-- 컨텐츠 변경 끝 -->
+
+
 <!-- 팝업 -->
 <script type="text/javascript" src="/static/js/team_notice.js"></script>
 <script>
@@ -319,17 +346,4 @@
 </script>
 <!-- 팝업 끝 -->
 
-<!-- 컨텐츠 변경 -->
-<script>
-    let header_btn = document.querySelectorAll('.team_menu_item')
-    let content_panel = document.querySelector('.team_mgmt_content_wrapper')
-    let content = document.querySelectorAll('.team_mgmt_content')
-    for( var i=0; i<header_btn.length;i++){
-        header_btn[i].addEventListener('click', () => {
-            console.log(header_btn[i])
-        })
-    }
-    
-</script>
-<!-- 컨텐츠 변경 끝 -->
 {% endblock %}
