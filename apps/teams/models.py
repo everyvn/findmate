@@ -24,7 +24,6 @@ def team_img_path(instance, filename):
     pid = ' '.join(arr)
     extension = filename.split('.')[-1]
     return 'team/{}.{}'.format(pid, extension)
-    
 
 PURPOSE_CHOICE = [
     ('1', '창업'),
@@ -80,23 +79,20 @@ class TeamOrg(MPTTModel):
     def title(self):
         return self.team.name
 
-REG_STATUS = [
-    ('1', 'REGISTERED'),
-    ('2', 'APPROVE'),
-    ('3', 'REJECT'),
-]
+# class TeamOrg(MPTTModel):
+#     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
+#     parent = TreeForeignKey('self', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
+#     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+#     position = models.CharField(verbose_name='직책', max_length=30, default='팀장')
 
+#     class Meta:
+#         ordering = ['tree_id', 'lft']
 
-class RegisteredMember(BaseModel):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                            on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    status = models.CharField(max_length=1, choices=REG_STATUS, null=True)
-    msg = RichTextUploadingField(config_name='default', blank=True, null=True)
+#     class MPTTMeta:
+#         order_insertion_by = ['parent']
 
-    def __str__(self):
-        return f"{self.user} request for {self.team.name}"
-
+#     def __str__(self):
+#         return f"{self.team} 조직도"
 
 CAREER_LEVEL = [
     ('1','경력 무관'),
@@ -120,3 +116,22 @@ class FindMember(BaseModel):
 
     def __str__(self):
         return f"{self.title} of {self.team.name}"
+
+
+REG_STATUS = [
+    ('1', 'REGISTERED'),
+    ('2', 'APPROVE'),
+    ('3', 'REJECT'),
+]
+
+
+class RegisteredMember(BaseModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                            on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    notice = models.ForeignKey(FindMember, on_delete=models.CASCADE, null=True, blank=True)
+    status = models.CharField(max_length=1, choices=REG_STATUS, null=True)
+    msg = RichTextUploadingField(config_name='default', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user} request for {self.team.name}"

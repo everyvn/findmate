@@ -116,8 +116,8 @@
     {% for member in members %}
     <a href="{% url 'member:member_info' member.id %}" class="member_box">
         <div class="member_info">
-            {% if member.logo %}
-            <img class="member_img" src="{{user.picture.url}}">
+            {% if member.picture %}
+            <img class="member_img" src="{{member.picture.url}}">
             {% else %}
             <img class="member_img" src="https://picsum.photos/200/200">
             {% endif %}

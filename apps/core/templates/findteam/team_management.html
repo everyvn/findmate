@@ -1,0 +1,376 @@
+{% extends "index.html" %}
+
+{% block title %}
+팀 생성
+{% endblock %}
+
+{% block style %}
+<style>
+    .make_team_wrapper {
+        padding: 2rem 1rem;
+    }
+
+    .box {
+        border: 1px solid #efefef;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 30px #eee;
+        width: 1280px;
+        margin: auto;
+    }
+
+    .form_header {
+        border-bottom: 1px solid #efefef;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form_header h3 {
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .form_header span {
+        font-size: .8rem;
+        color: gray;
+    }
+
+    .form_content {
+        padding: 0 2rem;
+    }
+
+    .form_control {
+        margin: 1rem 0;
+    }
+
+    .team_input {
+        margin-left: 2rem;
+        width: 480px;
+        height: 48px;
+        border: none;
+        border-bottom: 1px solid #efefef;
+        padding: .5rem;
+        font-size: 1rem;
+        font-weight: 300;
+        outline: none;
+    }
+
+    .form_label {
+        font-size: 1rem;
+        font-weight: 300;
+    }
+
+    .django-ckeditor-widget {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .btn {
+        cursor: pointer;
+        padding: .5rem 2rem;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 300;
+        background-color: gray;
+    }
+
+    .register_team {
+        background-color: #0099cc;
+        border: none;
+    }
+
+    .form_control select {
+        margin-left: 2rem;
+        width: 480px;
+        height: 48px;
+        border: none;
+        border-bottom: 1px solid #efefef;
+        padding: .5rem;
+        font-size: 1rem;
+        font-weight: 300;
+        outline: none;
+    }
+
+    .form_control input[type='file'] {
+        visibility: hidden;
+    }
+
+    .upload_label {
+        background-color: #0099ee;
+        padding: .3rem 1.2rem;
+        font-size: .8rem;
+        border-radius: 4px;
+        color: white;
+        margin-left: 2rem;
+    }
+
+    .form_control #text {
+        display: none;
+    }
+
+    .team_menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2rem 0;
+    }
+
+    .team_menu_item {
+        margin-right: 1rem;
+        border: 1px solid #EAEAEA;
+        padding: 1.5rem 1rem;
+        border-radius: 8px;
+        width: 280px;
+        position: relative;
+        transition: all ease 1s;
+    }
+
+    .team_menu_item:last-child {
+        margin-right: 0;
+    }
+
+    .team_menu_item h4 {
+        font-weight: 500;
+    }
+
+    .team_menu_item span {
+        font-weight: 300;
+        font-size: .8rem;
+        display: block;
+        line-height: 1.4;
+        margin-top: .8rem;
+        color: gray;
+    }
+
+    .team_menu_item:hover {
+        box-shadow: 0px 0px 30px #eee;
+        padding-left: 2rem;
+    }
+
+    .decorate_triangle {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0px;
+        height: 0px;
+        border-top: 16px solid #0C7BB3;
+        border-right: 16px solid #0C7BB3;
+        border-bottom: 16px solid transparent;
+        border-left: 16px solid transparent;
+        border-radius: 0 8px 0 0;
+    }
+
+    .team_menu_item.active_item {
+        box-shadow: 0px 0px 30px #eee;
+        padding-left: 2rem;
+    }
+
+    .team_menu_item.active_item .decorate_triangle {
+        display: block;
+    }
+
+    .team_menu_item:hover .decorate_triangle {
+        display: block;
+    }
+
+    .team_mgmt_content_wrapper {
+        padding: 0 2rem 2rem;
+    }
+
+    .team_mgmt_content {
+        border: 1px solid #EAEAEA;
+        padding: 1rem;
+        border-radius: 8px;
+        display: none;
+    }
+
+    .active {
+        display: block;
+    }
+
+    .team_delete_window {
+        width: 450px;
+        height: 200px;
+        padding: 1.5rem;
+    }
+
+    .btn_list {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .btn {
+        padding: .5rem 4rem;
+    }
+
+    .delete {
+        background-color: #F44336;
+    }
+</style>
+{% endblock %}
+
+{% block header_content %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="make_team_wrapper">
+    <div class="form_wrapper box">
+
+        <div class="form_header">
+            <div class="header_text">
+                <h3>{{team.name}} 팀 관리자 페이지</h3>
+                <span>안녕하세요 관리자님, 관리하고자하는 메뉴를 선택해주세요.</span>
+            </div>
+        </div>
+        <div class="form_content">
+            <ul class="team_menu">
+                <li class="team_menu_item active_item" data-group="basic_info">
+                    <a class="panel_change">
+                        <h4>팀 정보 관리</h4><span>로고/배너 등<br>팀의 기본적인 정보를 관리합니다.</span>
+                    </a>
+                    <div class="decorate_triangle"></div>
+                </li>
+                <li class="team_menu_item" data-group="org">
+                    <a class="panel_change">
+                        <h4>조직도 관리</h4><span>팀의 관리자를 설정하고<br>팀원 정보를 관리합니다.</span>
+                    </a>
+                    <div class="decorate_triangle"></div>
+                </li>
+                <li class="team_menu_item" data-group="recruit">
+                    <a class="panel_change">
+                        <h4>모집공고 관리</h4><span>모집공고 등록/수정/삭제 및<br>지원자를 관리합니다.</span>
+                    </a>
+                    <div class="decorate_triangle"></div>
+                </li>
+                <li class="team_menu_item">
+                    <a class="team_delete">
+                        <h4>팀 해체</h4><span>팀을 해체하고<br>모든 기록을 삭제합니다.</span>
+                    </a>
+                    <div class="decorate_triangle"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="team_mgmt_content_wrapper">
+            <!-- 팀 정보 관리 -->
+            <div class="team_mgmt_content active" data-group="basic_info">
+                <form method="POST" action="{% url 'core:update_team' team.pk %}" enctype="multipart/form-data"
+                    novalidate>
+                    <div class="form_header">
+                        <div class="header_text">
+                            <h3>{{team.name}} 팀 정보 수정</h3>
+                            <span>팀의 기본정보를 수정합니다.</span>
+                        </div>
+                        <div class="btn_list">
+                            <input type="submit" class="btn register_team" value="수정하기">
+                        </div>
+                    </div>
+                    <div class="form_content">
+                        {% csrf_token %}
+                        <div class="form_control">
+                            <label class="form_label" for="team_name">팀 이름</label>
+                            {{team_base_form.name}}
+                        </div>
+                        <div class="form_control">
+                            <label class="form_label" for="team_desc">팀 소개</label>
+                            {{team_base_form.short_description}}
+                        </div>
+                        <div class="form_control">
+                            <label class="form_label" for="id_purpose">팀 목표</label>
+                            {{team_base_form.purpose}}
+                        </div>
+                        <div class="form_control">
+                            <span class="form_label">팀 로고</span>
+                            <label class="upload_label" for="id_logo">업로드 (200x200)</label>
+                            {{team_base_form.logo}}
+                        </div>
+                        <div class="form_control">
+                            <span class="form_label">팀 배너</span>
+                            <label class="upload_label" for="id_team_banner">업로드 (1280x480)</label>
+                            {{team_base_form.team_banner}}
+                        </div>
+                        <div class="form_control">
+                            <h4 class="form_label" class="form_label">팀 소개</h4>
+                            {{team_base_form.media}}
+                            {{team_base_form.team_detail|safe}}
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <!-- 조직도 관리 -->
+            <div class="team_mgmt_content" data-group="org">
+                조직도 관리
+            </div>
+
+            <!-- 모집공고 관리 -->
+            <div class="team_mgmt_content" data-group="recruit">
+                모집공고 관리
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="popup_wrapper hidden">
+    <div class="popup_bg"></div>
+    <div class="popup_window team_delete_window">
+        <div class="career_header">
+            <div>
+                <h4>[{{team.name}}]팀을 해체하시겠습니까?</h4>
+                <span>이 작업은 취소할 수 없으며 데이터를 복원할 수 없습니다.</span>
+            </div>
+        </div>
+        <div class="btn_list">
+            <a href="{% url 'core:team_delete' team.pk %}" class="btn delete">해체</a>
+            <a class="btn close_btn">취소</a>
+        </div>
+    </div>
+</div>
+
+<!-- 팝업 -->
+<script type="text/javascript" src="/static/js/team_notice.js"></script>
+<script>
+    const delete_btn = document.querySelector('.team_delete');
+    delete_btn.addEventListener('click', () => {
+        console.log(delete_btn);
+        popup_wrapper.classList.toggle('hidden');
+        popup_bg_modify();
+    });
+</script>
+<!-- 팝업 끝 -->
+
+<!-- 컨텐츠 변경 -->
+<script>
+    let header_btn = document.querySelectorAll('.team_menu_item');
+    let content_panel = document.querySelector('.team_mgmt_content_wrapper');
+    let content = document.querySelectorAll('.team_mgmt_content');
+    for (let i = 0; i < header_btn.length; i++) {
+        (function (idx) {
+            header_btn[idx].onclick = () => {
+                teamMenuItemChange(idx)
+            }
+        })(i);
+    }
+    function teamMenuItemChange(targetIdx) {
+        for (let i = 0; i < header_btn.length; i++) {
+            if (i === targetIdx) {
+                header_btn[i].classList.add('active_item')
+                content[i].classList.add('active')
+            } else {
+                header_btn[i].classList.remove('active_item')
+                content[i].classList.remove('active')
+            }
+        }
+    }
+
+
+</script>
+<!-- 컨텐츠 변경 끝 -->
+{% endblock %}

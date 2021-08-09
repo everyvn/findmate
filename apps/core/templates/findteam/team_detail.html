@@ -28,8 +28,17 @@
 
     .team_header {
         padding: 1rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
+    .team_mgmt {
+        background-color: #0C7BB3;
+        color: white;
+        padding: .5rem 2rem;
+        border-radius: 4px;
+    }
     .name_desc span {
         font-weight: 300;
     }
@@ -98,99 +107,6 @@
         background-color: pink;
         color: #2b2b2b;
     }
-
-    /* 팝업 관련 */
-    body {
-        position: relative;
-    }
-
-    .popup_wrapper {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-    }
-
-    .popup_bg {
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        opacity: .5;
-        position: relative;
-    }
-
-    .popup_window {
-        position: absolute;
-        width: 1080px;
-        height: 580px;
-        background-color: white;
-        padding: 2rem 1.5rem;
-        overflow: scroll;
-    }
-
-    .career_header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #EFEFEF;
-        padding-bottom: 1rem;
-    }
-
-    .close_btn {
-        color: gray;
-        font-size: .9rem;
-        cursor: pointer;
-    }
-
-    .close_btn i {
-        color: gray;
-        margin-right: .5rem;
-    }
-
-    .career_tab {
-        display: flex;
-    }
-
-    .tab_left {
-        width: 30%;
-        max-height: 460px;
-        overflow: scroll;
-    }
-
-    .tab_left ul li {
-        padding: 1rem .5rem;
-        border-bottom: 1px solid #EFEFEF;
-    }
-
-    .tab_left ul li:hover {
-        background-color: #fafafa;
-    }
-
-    .tab_left ul li h5 {
-        font-weight: 500;
-    }
-
-    .tab_left ul li span {
-        font-size: .8rem;
-        color: gray;
-        font-weight: 300;
-    }
-
-    .tab_content {
-        width: 70%;
-        padding: 1rem;
-        max-height: 460px;
-        overflow: scroll;
-    }
-
-    .tab_content img {
-        max-width: 100%;
-    }
-
-    .hidden {
-        display: none;
-    }
 </style>
 
 {% endblock %}
@@ -208,6 +124,7 @@
             <h2 class="team_name">{{team.name}} <span>({{team.get_purpose_display}})</span></h2>
             <span>{{team.short_description}}</span>
         </div>
+        <a href="{% url 'core:team_management' team.pk %}" class="btn team_mgmt">팀 관리</a>
     </div>
     <div class="member_and_notice">
         <div class="team_members">
@@ -219,10 +136,9 @@
                     <img src="{{node.user.profile.picture.url}}">
                     <span>{{node.user.profile.name}}</span>
                     <span>({{node.position}})</span>
-
                 </a>
                 {% if not node.is_leaf_node %}
-                {{ children }}
+                    {{children}}
                 {% endif %}
                 {% endrecursetree %}
             </div>
@@ -246,26 +162,18 @@
         <div class="career_header">
             <div>
                 <h4>FindMate팀의 모집공고</h4>
-                <span>모집공고가 3개 있습니다.</span>
+                <span>아직 모집중인 공고가 없습니다.</span>
             </div>
             <span class="close_btn"><i class="far fa-times-circle"></i>닫기</span>
         </div>
         <div class="career_tab">
             <div class="tab_left">
                 <ul>
-                    <li>
-                        <h5>디자이너 구합니다.</h5><span>5명 / 10년 이상</span>
-                    </li>
-                    <li>
-                        <h5>참신한 기획자를 찾아요!</h5><span>5명 / 10년 이상</span>
-                    </li>
-                    <li>
-                        <h5>저희를 구원해줄 투자자 어디없나요</h5><span>5명 / 10년 이상</span>
-                    </li>
+                    <li><h5></h5><span></span></li>
                 </ul>
             </div>
             <div class="tab_content">
-                this is content
+                
             </div>
         </div>
     </div>

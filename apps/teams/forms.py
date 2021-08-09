@@ -85,6 +85,7 @@ class TeamRecruitForm(forms.ModelForm):
 
 
 class RegisterRequestForm(forms.ModelForm):
+
     class Meta:
         model = RegisteredMember
         field = '__all__'
