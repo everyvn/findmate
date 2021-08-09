@@ -127,11 +127,16 @@ def update_recruit(request, recruit_pk):
 @login_required
 def team_detail(request, team_pk):
     team = get_object_or_404(Team, pk=team_pk)
-    # team_org = TeamOrg.objects.filter(team=team_pk)
     team_org = TeamOrg.objects.filter(team=team)
+    try:
+        if team_org.get(Q(user=request.user)&(Q(position="팀장")|Q(position="부팀장"))):
+            authority = True
+    except:
+        authority = False        
     context = {
         'team':team,
         'team_org':team_org,
+        'authority':authority,
     }
     return render(request, 'findteam/team_detail.html', context)
 

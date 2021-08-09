@@ -125,7 +125,9 @@
             <h2 class="team_name">{{team.name}} <span>({{team.get_purpose_display}})</span></h2>
             <span>{{team.short_description}}</span>
         </div>
+        {% if authority %}
         <a href="{% url 'core:team_management' team.pk %}" class="btn team_mgmt">팀 관리</a>
+        {%endif%}
     </div>
     <div class="member_and_notice">
         <div class="team_members">
