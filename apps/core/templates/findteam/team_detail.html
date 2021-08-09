@@ -116,6 +116,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="team_wrapper">
     <img src="{{team.team_banner.url}}">
     <div class="team_header">
@@ -129,7 +130,6 @@
         <div class="team_members">
             <h4>현재 팀원 ({{team_org.count}}명)</h4>
             <div class="member_list">
-
                 {% load mptt_tags %}
                 {% recursetree team_org %}
                 <a href="{% url 'member:member_info' node.user.pk %}" class="member_item">
@@ -137,12 +137,10 @@
                     <span>{{node.user.profile.name}}</span>
                     <span>({{node.position}})</span>
                 </a>
-                
                 {% if not node.is_leaf_node %}
                     {{children}}
                 {% endif %}
                 {% endrecursetree %}
-
             </div>
         </div>
         <div class="find_members">
