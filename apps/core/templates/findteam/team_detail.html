@@ -39,6 +39,7 @@
         padding: .5rem 2rem;
         border-radius: 4px;
     }
+
     .name_desc span {
         font-weight: 300;
     }
@@ -124,7 +125,9 @@
             <h2 class="team_name">{{team.name}} <span>({{team.get_purpose_display}})</span></h2>
             <span>{{team.short_description}}</span>
         </div>
+        {% if authority %}
         <a href="{% url 'core:team_management' team.pk %}" class="btn team_mgmt">팀 관리</a>
+        {%endif%}
     </div>
     <div class="member_and_notice">
         <div class="team_members">
@@ -138,7 +141,7 @@
                     <span>({{node.position}})</span>
                 </a>
                 {% if not node.is_leaf_node %}
-                    {{children}}
+                {{children}}
                 {% endif %}
                 {% endrecursetree %}
             </div>
@@ -169,11 +172,13 @@
         <div class="career_tab">
             <div class="tab_left">
                 <ul>
-                    <li><h5></h5><span></span></li>
+                    <li>
+                        <h5></h5><span></span>
+                    </li>
                 </ul>
             </div>
             <div class="tab_content">
-                
+
             </div>
         </div>
     </div>
