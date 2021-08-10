@@ -1,0 +1,61 @@
+<!-- 모집공고 관리 -->
+<div class="team_mgmt_content" data-group="recruit">
+    <form method="POST" action="{% url 'core:update_team' team.pk %}" enctype="multipart/form-data"
+        novalidate>
+        <div class="form_header">
+            <div class="header_text">
+                <h3>모집공고를 선택해주세요.</h3>
+                <span>모집공고를 생성하거나 수정하고 지원자를 확인하여 팀원에 추가합니다</span>
+                <div class="team_recruit_wrapper">
+                    {% for recruit in team.find_member.all %}
+                    <div class="team_recruit_item">
+                        <h4 class="team_recruit_title">{{recruit.title}}</h4>
+                        <span>{{recruit.get_career_display}} {{recruit.manpower}}명 / {{recruit.registered_user.all.count}}명 지원</span>
+                        <div class="team_recruit_btn_list">
+                            <span class="team_recruit_modify popup_btn" data-popup="popup_recruit">공고수정</span>
+                            <span class="team_recruit_applicants popup_btn" data-popup="popup_recruit">지원확인</span>
+                            <span class="team_recruit_delete">공고삭제</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="team_recruit_item">
+                        <h1 class="team_recruit_create">+</h1>
+                        <h4 class="team_recruit_title">새로운 공고 만들기</h4>
+                        <span>새로운 모집공고를 생성합니다</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="popup_wrapper popup_recruit hidden">
+    <div class="popup_bg"></div>
+    <div class="popup_window">
+        <div class="career_header">
+            <div>
+                <h4>FindMate팀의 모집공고</h4>
+                <span>아직 모집중인 공고가 없습니다.</span>
+            </div>
+            <span class="close_btn"><i class="far fa-times-circle"></i>닫기</span>
+        </div>
+        hi!
+    </div>
+</div>
+
+<script>
+
+// 모집공고 상세 불러오기
+function notice_detail(notice_pk) {
+    var content_wrapper = document.querySelector('.tab_content')
+    content_wrapper.innerHTML = ''
+    let content_url = `/api/notice_detail/${notice_pk}`
+    fetch(content_url)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            content_wrapper.innerHTML = data.msg
+        })
+}
+</script>

@@ -79,10 +79,6 @@ class TeamOrg(MPTTModel):
     def title(self):
         return self.team.name
 
-<<<<<<< HEAD
-
-=======
->>>>>>> minwoo
 CAREER_LEVEL = [
     ('1','경력 무관'),
     ('2','2년 미만'),
@@ -118,7 +114,7 @@ class RegisteredMember(BaseModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                             on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    notice = models.ForeignKey(FindMember, on_delete=models.CASCADE, null=True, blank=True)
+    notice = models.ForeignKey(FindMember, on_delete=models.CASCADE, related_name='registered_user', null=True, blank=True)
     status = models.CharField(max_length=1, choices=REG_STATUS, null=True)
     msg = RichTextUploadingField(config_name='default', blank=True, null=True)
 

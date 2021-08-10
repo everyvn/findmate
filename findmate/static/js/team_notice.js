@@ -33,6 +33,7 @@ function popup_bg_modify() {
     html.style.overflow = 'hidden'
     body.style.overflow = 'hidden'
 }
+
 // 팝업창 모집 리스트 불러오기
 
 function notice_list(team_pk) {

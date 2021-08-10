@@ -1,0 +1,42 @@
+<div class="team_mgmt_content active" data-group="basic_info">
+    <form method="POST" action="{% url 'core:update_team' team.pk %}" enctype="multipart/form-data" novalidate>
+        <div class="form_header">
+            <div class="header_text">
+                <h3>{{team.name}} 팀 정보 수정</h3>
+                <span>팀의 기본정보를 수정합니다.</span>
+            </div>
+            <input type="submit" class="btn register_team" value="수정하기">
+        </div>
+        <div class="form_content">
+            {% csrf_token %}
+            <div class="form_control">
+                <label class="form_label" for="team_name">팀 이름</label>
+                {{team_base_form.name}}
+            </div>
+            <div class="form_control">
+                <label class="form_label" for="team_desc">팀 소개</label>
+                {{team_base_form.short_description}}
+            </div>
+            <div class="form_control">
+                <label class="form_label" for="id_purpose">팀 목표</label>
+                {{team_base_form.purpose}}
+            </div>
+            <div class="form_control">
+                <span class="form_label">팀 로고</span>
+                <label class="upload_label" for="id_logo">업로드 (200x200)</label>
+                {{team_base_form.logo}}
+            </div>
+            <div class="form_control">
+                <span class="form_label">팀 배너</span>
+                <label class="upload_label" for="id_team_banner">업로드 (1280x480)</label>
+                {{team_base_form.team_banner}}
+            </div>
+            <div class="form_control">
+                <h4 class="form_label" class="form_label">팀 소개</h4>
+                {{team_base_form.media}}
+                {{team_base_form.team_detail|safe}}
+            </div>
+
+        </div>
+    </form>
+</div>
