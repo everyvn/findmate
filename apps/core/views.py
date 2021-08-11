@@ -177,9 +177,13 @@ def team_management(request, team_pk):
     # 팀 기본정보 관리에 필요한 코드
     team_base_form = TeamRegisterForm(instance=team)
 
+    # 팀 조직도 정보
+    team_org = TeamOrg.objects.filter(team=team)
+
     context = {
         'team':team,
         'team_base_form':team_base_form,
+        'team_org':team_org
     }
     return render(request, 'findteam/team_management.html', context)
 

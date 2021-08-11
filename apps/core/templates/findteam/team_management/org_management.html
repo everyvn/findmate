@@ -1,0 +1,63 @@
+<!-- 조직도 관리 -->
+<style>
+    .team_mgmt_content ul {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+    }
+
+    .team_mgmt_content ul li,
+    .member_info {
+        text-align: center;
+        width: 200px;
+    }
+
+    .member_info {
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 10px;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid #efefef;
+    }
+
+    .team_mgmt_form {
+        position: relative;
+    }
+
+    .modify_member {
+        background-color: #0099cc;
+        border: none;
+        width: 200px;
+        text-align: center;
+        position: relative;
+        left: 0px;
+    }
+</style>
+<div class="team_mgmt_content" data-group="org">
+    <ul>
+        <li>직책</li>
+        <li>팀원명</li>
+        <li>권한부여</li>
+    </ul>
+    <form class="team_mgmt_form" action="">
+        <ul>
+            {% load mptt_tags %}
+            {% recursetree team_org %}
+            <li>
+                <input class="member_info" type="text" value="{{node.position}}">
+            </li>
+            <li>
+                <input class="member_info" type="text" value="{{node.user.profile.name}}">
+            </li>
+            <li>
+                <input class="member_info" type="checkbox">
+            </li>
+            {% if not node.is_leaf_node %}
+            {{children}}
+            {% endif %}
+            {% endrecursetree %}
+        </ul>
+        <input type="sumit" value="저장" class="btn modify_member">
+    </form>
+</div>
