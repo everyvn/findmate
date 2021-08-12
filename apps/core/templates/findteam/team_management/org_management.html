@@ -24,7 +24,11 @@
     .team_mgmt_form {
         position: relative;
     }
-
+    .submit_wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
     .modify_member {
         background-color: #0099cc;
         border: none;
@@ -58,6 +62,9 @@
             {% endif %}
             {% endrecursetree %}
         </ul>
-        <input type="sumit" value="저장" class="btn modify_member">
+        <div class="submit_wrapper">
+            <input type="sumit" value="저장" class="btn modify_member">
+        </div>
+        
     </form>
 </div>

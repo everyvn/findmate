@@ -1,6 +1,10 @@
+
 <style>
     .team_recruit_btn_list span {
         cursor: pointer;
+    }
+    .tab_content {
+        width: 100%;
     }
 </style>
 <!-- 모집공고 관리 -->
@@ -17,8 +21,8 @@
                         <span>{{recruit.get_career_display}} {{recruit.manpower}}명 /
                             {{recruit.registered_user.all.count}}명 지원</span>
                         <div class="team_recruit_btn_list">
-                            <span class="team_recruit_modify popup_btn" data-popup="popup_recruit">공고수정</span>
-                            <span class="team_recruit_applicants popup_btn" data-popup="popup_recruit">지원확인</span>
+                            <span class="team_recruit_modify popup_btn" data-recruit="{{recruit.pk}}" data-popup="popup_recruit">공고수정</span>
+                            <span class="team_recruit_applicants popup_btn" data-recruit="{{recruit.pk}}" data-popup="popup_applicant">지원확인</span>
                             <span class="team_recruit_delete">공고삭제</span>
                         </div>
                     </div>
@@ -39,28 +43,60 @@
 <div class="popup_wrapper popup_recruit hidden">
     <div class="popup_bg"></div>
     <div class="popup_window">
-        <div class="career_header">
-            <div>
-                <h4>FindMate팀의 모집공고</h4>
-                <span>아직 모집중인 공고가 없습니다.</span>
-            </div>
-            <span class="close_btn"><i class="far fa-times-circle"></i>닫기</span>
-        </div>
-        hi!
+        {% include 'findteam/team_management/popup/recruit_update.html' with recruit_update_form=recruit_update_form %}
+    </div>
+</div>
+
+<div class="popup_wrapper popup_applicant hidden">
+    <div class="popup_bg"></div>
+    <div class="popup_window">
+        지원자 페이지입니다.
     </div>
 </div>
 
 <script>
 
-    // 모집공고 상세 불러오기
-    function notice_detail(notice_pk) {
-        var content_wrapper = document.querySelector('.tab_content')
-        content_wrapper.innerHTML = ''
-        let content_url = `/api/notice_detail/${notice_pk}`
-        fetch(content_url)
-            .then((resp) => resp.json())
-            .then(function (data) {
-                content_wrapper.innerHTML = data.msg
-            })
-    }
+let recruit_update_btn = document.querySelectorAll('.team_recruit_modify')
+for (i=0;i<recruit_update_btn.length;i++){
+    recruit_update_btn[i].addEventListener('click', function() {
+        recruit_update(this.dataset.recruit)
+    })
+}
+
+// 모집공고 수정 페이지 불러오기
+function recruit_update(notice_pk) {
+    var content_wrapper = document.querySelector('.tab_content')
+    var header_title = document.querySelectorAll('.header_title')
+    var header_desc = document.querySelectorAll('.header_desc')
+    // form 각 input 찾기
+    var form_title = document.querySelector('#id_title')
+    var form_essencial = document.querySelector('#id_essencial')
+    var form_plus = document.querySelector('#id_plus')
+    var form_msg = document.querySelector('#id_msg')
+    var form_manpower = document.querySelector('#id_manpower')
+    var form_career = document.querySelector('#id_career')
+    var form_name = document.querySelector('#id_contact_name')
+    var form_phone = document.querySelector('#id_contact_phone')
+    var form_email = document.querySelector('#id_contact_email')
+
+    let content_url = `/api/notice_detail/${notice_pk}`
+    fetch(content_url)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            for(i=0;i<header_title.length;i++){
+                header_title[i].innerHTML = `{{team.name}} - [${data.title}]`
+                header_desc[i].innerHTML = '공고 내용을 수정합니다.'
+            }
+            console.log(data)
+            form_title.value = data['title']
+            form_essencial.value = data['essencial']
+            form_plus.value = data['plus']
+            form_msg.value = data['msg']
+            form_manpower.value = data['manpower']
+            form_career.value = data['career']
+            form_name.value = data['contact_name']
+            form_phone.value = data['contact_phone']
+            form_email.value = data['contact_email']
+        })
+}
 </script>

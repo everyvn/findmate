@@ -1,0 +1,71 @@
+<style>
+    .career_header div .back_to_list {
+        cursor: pointer;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 300;
+        background-color: gray;
+        color: #ffffff;
+    }
+</style>
+<form method="POST" action="" enctype="multipart/form-data">
+    <div class="career_header">
+        <div>
+            <h4 class="header_title">모집공고</h4>
+            <span class="header_desc">아직 모집중인 공고가 없습니다.</span>
+        </div>
+        <div>
+            <span class="btn back_to_list close_btn">닫기</span>
+            <input class="btn register_team" type="submit" value="업데이트"></span>
+        </div>
+    </div>
+    <div class="tab_content">
+        <div class="form_wrapper">
+            
+                <div class="form_content">
+                    {% csrf_token %}
+                    <div class="form_control">
+                        <label class="form_label" for="team_name">공고 제목</label>
+                        {{recruit_update_form.title}}
+                    </div>
+                    <div class="form_control">
+                        <label class="form_label" for="team_desc">지원 자격</label>
+                        {{recruit_update_form.essencial}}
+                    </div>
+                    <div class="form_control">
+                        <label class="form_label" for="id_purpose">우대 사항</label>
+                        {{recruit_update_form.plus}}
+                    </div>
+                    <div class="form_control">
+                        <label class="form_label" for="id_purpose">모집 인원</label>
+                        {{recruit_update_form.manpower}}
+                    </div>
+                    <div class="form_control">
+                        <label class="form_label" for="id_purpose">경력 연차</label>
+                        {{recruit_update_form.career}}
+                        
+                    </div>
+                    <div class="form_control">
+                        <label class="form_label" for="id_purpose">담당자명</label>
+                        {{recruit_update_form.contact_name}}
+                    </div>
+                    <div class="form_control">
+                        <label class="form_label" for="id_purpose">전화번호</label>
+                        {{recruit_update_form.contact_phone}}
+                    </div>
+                    <div class="form_control">
+                        <label class="form_label" for="id_purpose">메일주소</label>
+                        {{recruit_update_form.contact_email}}
+                    </div>
+                    <div class="form_control">
+                        <h4 class="form_label" class="form_label">모집공고 상세</h4>
+                        {{recruit_update_form.media}}
+                        {{recruit_update_form.msg}}
+                    </div>
+                    
+                </div>
+            
+        </div>
+    </div>
+</form>
+
