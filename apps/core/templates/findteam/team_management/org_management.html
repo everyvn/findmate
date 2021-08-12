@@ -21,21 +21,33 @@
         border-bottom: 1px solid #efefef;
     }
 
+    .member_info.check {
+        vertical-align: middle;
+    }
+
     .team_mgmt_form {
         position: relative;
     }
+<<<<<<< HEAD
     .submit_wrapper {
         width: 100%;
         display: flex;
         justify-content: flex-end;
     }
+=======
+
+    .modifyBtnWrap {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+>>>>>>> minwoo
     .modify_member {
         background-color: #0099cc;
         border: none;
         width: 200px;
         text-align: center;
-        position: relative;
-        left: 0px;
     }
 </style>
 <div class="team_mgmt_content" data-group="org">
@@ -45,9 +57,10 @@
         <li>권한부여</li>
     </ul>
     <form class="team_mgmt_form" action="">
+
+        {% load mptt_tags %}
+        {% recursetree team_org %}
         <ul>
-            {% load mptt_tags %}
-            {% recursetree team_org %}
             <li>
                 <input class="member_info" type="text" value="{{node.position}}">
             </li>
@@ -55,16 +68,22 @@
                 <input class="member_info" type="text" value="{{node.user.profile.name}}">
             </li>
             <li>
-                <input class="member_info" type="checkbox">
+                <input class="member_info check" type="checkbox">
             </li>
-            {% if not node.is_leaf_node %}
-            {{children}}
-            {% endif %}
-            {% endrecursetree %}
         </ul>
+<<<<<<< HEAD
         <div class="submit_wrapper">
             <input type="sumit" value="저장" class="btn modify_member">
         </div>
         
+=======
+        {% if not node.is_leaf_node %}
+        {{children}}
+        {% endif %}
+        {% endrecursetree %}
+        <div class="modifyBtnWrap">
+            <input type="sumit" value="저장" class="btn modify_member">
+        </div>
+>>>>>>> minwoo
     </form>
 </div>
