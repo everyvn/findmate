@@ -107,11 +107,13 @@
         <form method="POST" action="{% if posting_type == 'create' %}{% url 'core:team_recruit' team.pk %}{% else  %}{% url 'core:update_recruit' recruit.pk %}{% endif %}" enctype="multipart/form-data">
             <div class="form_header">
                 <div class="header_text">
-                    <h3>모집공고 만들기</h3>
+                    <h3>
+                        {% if posting_type == 'create' %}모집공고 만들기{% else %}모집공고 업데이트{% endif %}
+                    </h3>
                     <span>훌륭한 팀원을 찾기 위해 신중하게 작성해주세요.</span>
                 </div>
                 <div class="btn_list">
-                    <a class="btn back_to_list">돌아가기</a>
+                    <a class="btn back_to_list" href="javascript:history.back()">돌아가기</a>
                     <input type="submit" class="btn register_team" value="등록하기">
                 </div>
             </div>

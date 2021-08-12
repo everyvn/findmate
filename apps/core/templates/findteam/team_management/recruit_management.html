@@ -21,9 +21,9 @@
                         <span>{{recruit.get_career_display}} {{recruit.manpower}}명 /
                             {{recruit.registered_user.all.count}}명 지원</span>
                         <div class="team_recruit_btn_list">
-                            <span class="team_recruit_modify popup_btn" data-recruit="{{recruit.pk}}" data-popup="popup_recruit">공고수정</span>
-                            <span class="team_recruit_applicants popup_btn" data-recruit="{{recruit.pk}}" data-popup="popup_applicant">지원확인</span>
-                            <span class="team_recruit_delete">공고삭제</span>
+                            <a href="{% url 'core:update_recruit' recruit.pk %}" class="team_recruit_modify recruit_btn" data-recruit="{{recruit.pk}}" data-popup="popup_recruit">공고수정</a>
+                            <span class="team_recruit_applicants popup_btn recruit_btn" data-recruit="{{recruit.pk}}" data-popup="popup_applicant">지원확인</span>
+                            <span class="team_recruit_delete recruit_btn">공고삭제</span>
                         </div>
                     </div>
                     {% endfor %}
@@ -40,13 +40,6 @@
 </div>
 
 
-<div class="popup_wrapper popup_recruit hidden">
-    <div class="popup_bg"></div>
-    <div class="popup_window">
-        {% include 'findteam/team_management/popup/recruit_update.html' with recruit_update_form=recruit_update_form recruit=recruit %}
-    </div>
-</div>
-
 <div class="popup_wrapper popup_applicant hidden">
     <div class="popup_bg"></div>
     <div class="popup_window">
@@ -56,111 +49,6 @@
 
 <script>
 
-let recruit_update_btn = document.querySelectorAll('.team_recruit_modify')
-for (i=0;i<recruit_update_btn.length;i++){
-    recruit_update_btn[i].addEventListener('click', function() {
-        recruit_load(this.dataset.recruit)
-    })
-}
-
-// 모집공고 수정 페이지 불러오기
-function recruit_load(notice_pk) {
-    var content_wrapper = document.querySelector('.tab_content')
-    var header_title = document.querySelectorAll('.header_title')
-    var header_desc = document.querySelectorAll('.header_desc')
-    // form 각 input 찾기
-    var form_recruit = document.querySelector('#recruit_form')
-    var form_title = document.querySelector('#id_title')
-    var form_essencial = document.querySelector('#id_essencial')
-    var form_plus = document.querySelector('#id_plus')
-    var form_msg = document.querySelector('.cke_editable')
-    var form_manpower = document.querySelector('#id_manpower')
-    var form_career = document.querySelector('#id_career')
-    var form_name = document.querySelector('#id_contact_name')
-    var form_phone = document.querySelector('#id_contact_phone')
-    var form_email = document.querySelector('#id_contact_email')
-
-    let content_url = `/api/notice_detail/${notice_pk}`
-    fetch(content_url)
-        .then((resp) => resp.json())
-        .then(function (data) {
-            for(i=0;i<header_title.length;i++){
-                header_title[i].innerHTML = `{{team.name}} - [${data.title}]`
-                header_desc[i].innerHTML = '공고 내용을 수정합니다.'
-            }
-            form_title.value = data['title']
-            form_essencial.value = data['essencial']
-            form_plus.value = data['plus']
-            form_manpower.value = data['manpower']
-            form_career.value = data['career']
-            form_name.value = data['contact_name']
-            form_phone.value = data['contact_phone']
-            form_email.value = data['contact_email']
-            CKEDITOR.instances['id_msg'].setData(data['msg'])
-            var update_btn = document.querySelector('.update_submit')
-            update_btn.addEventListener('click', () => {
-                recruit_update(notice_pk)
-            })
-        })
-}
-
-// 모집공고 수정 API콜
-function recruit_update(notice_pk) {
-    // cookie 사용한 csrf토큰 생성
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    var csrftoken = getCookie('csrftoken');
-    var form_title = document.querySelector('#id_title').value
-    var form_essencial = document.querySelector('#id_essencial').value
-    var form_plus = document.querySelector('#id_plus').value
-    var form_msg = CKEDITOR.instances.id_msg.getData()
-    var form_manpower = document.querySelector('#id_manpower').value
-    var form_career = document.querySelector('#id_career').value
-    var form_name = document.querySelector('#id_contact_name').value
-    var form_phone = document.querySelector('#id_contact_phone').value
-    var form_email = document.querySelector('#id_contact_email').value
-    console.log(form_msg)
-    update_url = `/api/notice_update/${notice_pk}`
-    
-    fetch(update_url, {
-            method:'POST',
-            headers:{
-                'Content-type':'application/json',
-                'X-CSRFToken':csrftoken
-            },
-            body:JSON.stringify({
-                'title':form_title,
-                'essencial':form_essencial,
-                'plus':form_plus,
-                'msg':form_msg,
-                'manpower': Number(form_manpower),
-                'career':form_career,
-                'contact_name':form_name,
-                'contact_phone':form_phone,
-                'contact_email':form_email,
-                'team':notice_pk,
-            })
-            }
-    ).then(function(response){
-        popup_wrapper.classList.add('hidden')
-        html.style.overflow = 'scroll'
-        body.style.overflow = 'scroll'
-    })
-}
 
 
 </script>
