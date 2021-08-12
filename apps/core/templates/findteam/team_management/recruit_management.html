@@ -27,11 +27,11 @@
                         </div>
                     </div>
                     {% endfor %}
-                    <div class="team_recruit_item">
+                    <a class="team_recruit_item" href="{% url 'core:team_recruit' team.pk %}">
                         <h1 class="team_recruit_create">+</h1>
                         <h4 class="team_recruit_title">새로운 공고 만들기</h4>
                         <span>새로운 모집공고를 생성합니다</span>
-                    </div>
+                    </a>
                 </div>
 
             </div>

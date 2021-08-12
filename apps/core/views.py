@@ -5,6 +5,7 @@ from apps.teams.forms import *
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from ckeditor.fields import RichTextField
+from django.urls import reverse
 # Create your views here.
 
 def main_page(request):
@@ -111,9 +112,8 @@ def update_recruit(request, recruit_pk):
             newRecruit.save()
             form.save_m2m()
 
-            return redirect('core:main_page')
+            return redirect(reverse('core:team_management', kwargs={"team_pk": team.pk}))
     else:
-        print('업데이트 페이지 진입')
         form = TeamRecruitForm(instance=recruit)
     context = {
         'team':team,
