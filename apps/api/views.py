@@ -19,3 +19,17 @@ def notice_detail(request, notice_pk):
     notice = get_object_or_404(FindMember, pk = notice_pk)
     serializer = FindMemberList(notice)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def notice_update(request, notice_pk):
+    notice = get_object_or_404(FindMember, pk = notice_pk)
+    serializer = FindMemberList(instance=notice, data=request.data)
+    print(serializer)
+
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        print('앙대')
+    
+    return Response(serializer.data)
