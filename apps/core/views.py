@@ -4,6 +4,7 @@ from apps.member.models import *
 from apps.teams.forms import *
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from ckeditor.fields import RichTextField
 # Create your views here.
 
 def main_page(request):
@@ -128,11 +129,7 @@ def update_recruit(request, recruit_pk):
 def team_detail(request, team_pk):
     team = get_object_or_404(Team, pk=team_pk)
     team_org = TeamOrg.objects.filter(team=team)
-    try:
-        if team_org.get(Q(user=request.user)&(Q(position="팀장")|Q(position="부팀장"))):
-            authority = True
-    except:
-        authority = False        
+    authority = team_org.get(user=request.user).authority
     context = {
         'team':team,
         'team_org':team_org,
@@ -179,11 +176,17 @@ def team_management(request, team_pk):
 
     # 팀 조직도 정보
     team_org = TeamOrg.objects.filter(team=team)
+    manager = team_org.get(user=request.user)
+
+    # 팀 모집공고용 ckeditor
+    recruit_update_form = TeamRecruitForm()
 
     context = {
         'team':team,
         'team_base_form':team_base_form,
-        'team_org':team_org
+        'team_org':team_org,
+        'recruit_update_form':recruit_update_form,
+        'manager':manager,
     }
     return render(request, 'findteam/team_management.html', context)
 

@@ -136,12 +136,10 @@
                 {% csrf_token %}
                 <div class="form_control">
                     <label class="form_label" for="team_name">팀 이름</label>
-                    <!-- <input class="team_input" id="team_name" type="text" placeholder="팀 이름을 입력해주세요. (최대 20자)"> -->
                     {{form.name}}
                 </div>
                 <div class="form_control">
                     <label class="form_label" for="team_desc">팀 소개</label>
-                    <!-- <input class="team_input" id="team_desc" type="text" placeholder="짧은 소개문구를 입력해주세요. (최대 50자)"> -->
                     {{form.short_description}}
                 </div>
                 <div class="form_control">

@@ -1,9 +1,13 @@
 <!-- 조직도 관리 -->
 <style>
     .team_mgmt_content ul {
-        display: flex;
-        justify-content: space-around;
         margin-bottom: 20px;
+        grid-template-columns: repeat(4, 1fr);
+        display: grid;
+    }
+
+    .team_mgmt_content ul li {
+        margin: 0 auto;
     }
 
     .team_mgmt_content ul li,
@@ -29,9 +33,9 @@
         position: relative;
     }
 
-    .modifyBtnWrap {
-        display: flex;
+    .submit_wrapper {
         width: 100%;
+        display: flex;
         justify-content: flex-end;
     }
 
@@ -41,12 +45,22 @@
         width: 200px;
         text-align: center;
     }
+
+    .expelBtn {
+        padding: 8px 20px;
+        cursor: pointer;
+        outline: none;
+        color: #fff;
+        border: 1px solid transparent;
+        background: rgb(228, 7, 7)
+    }
 </style>
 <div class="team_mgmt_content" data-group="org">
     <ul>
         <li>직책</li>
         <li>팀원명</li>
         <li>권한부여</li>
+        <li>팀 양도</li>
     </ul>
     <form class="team_mgmt_form" action="">
 
@@ -60,15 +74,25 @@
                 <input class="member_info" type="text" value="{{node.user.profile.name}}">
             </li>
             <li>
+                {%if node.authority %}
+                <input class="member_info check" type="checkbox" checked>
+                {% else %}
                 <input class="member_info check" type="checkbox">
+                {% endif %}
+            </li>
+            <li>
+                {%if not node.is_leader %}
+                <button class="expelBtn">추방</button>
+                {% endif %}
             </li>
         </ul>
         {% if not node.is_leaf_node %}
         {{children}}
         {% endif %}
         {% endrecursetree %}
-        <div class="modifyBtnWrap">
+        <div class="submit_wrapper">
             <input type="sumit" value="저장" class="btn modify_member">
         </div>
+
     </form>
 </div>

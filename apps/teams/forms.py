@@ -78,6 +78,7 @@ class TeamRecruitForm(forms.ModelForm):
         'class':'team_input',
         'placeholder': '모집 담당자 이메일주소를 입력해주세요.'
     }))
+    msg = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = FindMember
         field = '__all__'

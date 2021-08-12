@@ -68,6 +68,7 @@ class TeamOrg(MPTTModel):
     parent = TreeForeignKey('self', verbose_name='parent', related_name='children', on_delete=models.SET_NULL, null=True, blank=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
     position = models.CharField(verbose_name='직책', max_length=30, default="팀장")
+    authority = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['tree_id', 'lft']
@@ -78,7 +79,12 @@ class TeamOrg(MPTTModel):
     @property
     def title(self):
         return self.team.name
-
+    @property
+    def is_leader(self):
+        if self.level == 0:
+            return True
+        else:
+            return False
 CAREER_LEVEL = [
     ('1','경력 무관'),
     ('2','2년 미만'),
