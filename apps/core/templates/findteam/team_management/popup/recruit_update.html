@@ -8,7 +8,7 @@
         color: #ffffff;
     }
 </style>
-<form method="POST" action="" enctype="multipart/form-data">
+<form id="recruit_form" enctype="multipart/form-data">
     <div class="career_header">
         <div>
             <h4 class="header_title">모집공고</h4>
@@ -16,7 +16,7 @@
         </div>
         <div>
             <span class="btn back_to_list close_btn">닫기</span>
-            <input class="btn register_team" type="submit" value="업데이트"></span>
+            <span class="btn register_team update_submit">업데이트</span>
         </div>
     </div>
     <div class="tab_content">
@@ -59,7 +59,6 @@
                     </div>
                     <div class="form_control">
                         <h4 class="form_label" class="form_label">모집공고 상세</h4>
-                        {{recruit_update_form.media}}
                         {{recruit_update_form.msg}}
                     </div>
                     
@@ -68,4 +67,5 @@
         </div>
     </div>
 </form>
+
 
